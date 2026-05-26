@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hermes-agent==0.14.0 — Buildability for Fedora f44 &amp; f45</title>
+<style>
+  :root {
+    --ok: #1a7f37;
+    --warn: #9a6700;
+    --fail: #cf222e;
+    --bg: #ffffff;
+    --fg: #1f2328;
+    --border: #d0d7de;
+    --stripe: #f6f8fa;
+    --header-bg: #f6f8fa;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fg);
+    background: var(--bg);
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  h2 { font-size: 17px; margin: 24px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .subtitle { color: #656d76; margin-bottom: 24px; font-size: 13px; }
+
+  .summary-cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .summary-card {
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+  }
+  .summary-card h3 { font-size: 13px; font-weight: 600; color: #656d76; margin-bottom: 8px; text-transform: uppercase; }
+  .summary-card .number { font-size: 36px; font-weight: 700; }
+  .summary-card .label { font-size: 12px; color: #656d76; }
+  .card-f44 { border-left: 4px solid #0969da; }
+  .card-f45 { border-left: 4px solid #8250df; }
+  .card-blockers { border-left: 4px solid var(--fail); }
+  .card-f44 .number { color: #0969da; }
+  .card-f45 .number { color: #8250df; }
+  .card-blockers .number { color: var(--fail); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    padding: 8px 10px;
+    background: var(--header-bg);
+    border: 1px solid var(--border);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  td {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--stripe); }
+
+  .badge { display:inline-block; padding:1px 6px; border-radius:2em; font-size:11px; font-weight:600; white-space:nowrap; }
+  .badge-ok { background:#dafbe1; color:var(--ok); }
+  .badge-warn { background:#fff8c5; color:var(--warn); }
+  .badge-fail { background:#ffebe9; color:var(--fail); }
+
+  .pkg-name { font-weight:600; font-family: "SF Mono", "Menlo", monospace; font-size: 12px; }
+  .specifier { color: #656d76; font-family: "SF Mono", "Menlo", monospace; font-size: 11px; }
+  .extra-tag { display:inline-block; background:#ddf4ff; color:#0969da; padding:0 5px; border-radius:2em; font-size:10px; margin-right:2px; }
+
+  .blockers-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .blocker-item {
+    font-family: "SF Mono", "Menlo", monospace;
+    font-size: 12px;
+    padding: 3px 8px;
+    background: #ffebe9;
+    color: var(--fail);
+    border-radius: 4px;
+    border: 1px solid #ffc1ba;
+  }
+
+  .legend { font-size: 12px; color: #656d76; margin-bottom: 16px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 4px; }
+
+  .see-also {
+    margin-top: 20px;
+    padding: 12px 16px;
+    background: #ddf4ff;
+    border: 1px solid #80ccff;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .see-also a { color: #0969da; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>hermes-agent==0.14.0</h1>
+<p class="subtitle">Dependency buildability analysis for Fedora f44 and f45 (rawhide) &mdash; generated 2026-05-25</p>
+
+<div class="summary-cards">
+  <div class="summary-card card-f44">
+    <h3>f44 Base</h3>
+    <div class="number">12/16</div>
+    <div class="label">75% buildable</div>
+  </div>
+  <div class="summary-card card-f44">
+    <h3>f44 + Extras</h3>
+    <div class="number">31/60</div>
+    <div class="label">52% total</div>
+  </div>
+  <div class="summary-card card-f45">
+    <h3>f45 Base</h3>
+    <div class="number">14/16</div>
+    <div class="label">88% buildable</div>
+  </div>
+  <div class="summary-card card-f45">
+    <h3>f45 + Extras</h3>
+    <div class="number">35/60</div>
+    <div class="label">58% total</div>
+  </div>
+  <div class="summary-card card-blockers">
+    <h3>Not Packaged</h3>
+    <div class="number">27</div>
+    <div class="label">on either release</div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="badge badge-ok">✓ exact</span> version matches</span>
+  <span><span class="badge badge-warn">~ diff</span> version differs (patch/minor)</span>
+  <span><span class="badge badge-fail">✗ fail</span> not packaged or too old</span>
+</div>
+
+<!-- ===================== BASE ===================== -->
+<h2>Base Dependencies</h2>
+<table>
+<thead>
+<tr>
+  <th>PyPI Package</th>
+  <th>Required</th>
+  <th>f44 RPM</th>
+  <th>f44</th>
+  <th>f45 RPM</th>
+  <th>f45</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="pkg-name">openai</span></td>
+  <td><span class="specifier">==2.24.0</span></td>
+  <td>python-openai-2.21.0-1</td>
+  <td><span class="badge badge-warn">2.21.0</span></td>
+  <td>python-openai-2.21.0-1</td>
+  <td><span class="badge badge-warn">2.21.0</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">python-dotenv</span></td>
+  <td><span class="specifier">==1.2.1</span></td>
+  <td>python-dotenv-1.1.0-7</td>
+  <td><span class="badge badge-warn">1.1.0</span></td>
+  <td>python-dotenv-1.2.2-1</td>
+  <td><span class="badge badge-ok">1.2.2 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">fire</span></td>
+  <td><span class="specifier">==0.7.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">httpx[socks]</span></td>
+  <td><span class="specifier">==0.28.1</span></td>
+  <td>python-httpx-0.28.1-11</td>
+  <td><span class="badge badge-ok">0.28.1 ✓</span></td>
+  <td>python-httpx-0.28.1-11</td>
+  <td><span class="badge badge-ok">0.28.1 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">rich</span></td>
+  <td><span class="specifier">==14.3.3</span></td>
+  <td>python-rich-14.3.2-1</td>
+  <td><span class="badge badge-warn">14.3.2</span></td>
+  <td>python-rich-15.0.0-2</td>
+  <td><span class="badge badge-warn">15.0.0</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">tenacity</span></td>
+  <td><span class="specifier">==9.1.4</span></td>
+  <td>python-tenacity-9.1.2-5</td>
+  <td><span class="badge badge-warn">9.1.2</span></td>
+  <td>python-tenacity-9.1.4-1</td>
+  <td><span class="badge badge-ok">9.1.4 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">pyyaml</span></td>
+  <td><span class="specifier">==6.0.3</span></td>
+  <td>PyYAML-6.0.3-3</td>
+  <td><span class="badge badge-ok">6.0.3 ✓</span></td>
+  <td>PyYAML-6.0.3-3</td>
+  <td><span class="badge badge-ok">6.0.3 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">ruamel.yaml</span></td>
+  <td><span class="specifier">==0.18.17</span></td>
+  <td>python-ruamel-yaml-0.19.1-2</td>
+  <td><span class="badge badge-warn">0.19.1</span></td>
+  <td>python-ruamel-yaml-0.19.1-2</td>
+  <td><span class="badge badge-warn">0.19.1</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">requests</span></td>
+  <td><span class="specifier">==2.33.0</span></td>
+  <td>python-requests-2.32.5-5</td>
+  <td><span class="badge badge-warn">2.32.5</span></td>
+  <td>python-requests-2.33.1-1</td>
+  <td><span class="badge badge-ok">2.33.1 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">jinja2</span></td>
+  <td><span class="specifier">==3.1.6</span></td>
+  <td>python-jinja2-3.1.6-7</td>
+  <td><span class="badge badge-ok">3.1.6 ✓</span></td>
+  <td>python-jinja2-3.1.6-7</td>
+  <td><span class="badge badge-ok">3.1.6 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">pydantic</span></td>
+  <td><span class="specifier">==2.12.5</span></td>
+  <td>python-pydantic-2.12.5-3</td>
+  <td><span class="badge badge-ok">2.12.5 ✓</span></td>
+  <td>python-pydantic-2.13.4-1</td>
+  <td><span class="badge badge-warn">2.13.4</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">prompt_toolkit</span></td>
+  <td><span class="specifier">==3.0.52</span></td>
+  <td>python-prompt-toolkit-3.0.52-2</td>
+  <td><span class="badge badge-ok">3.0.52 ✓</span></td>
+  <td>python-prompt-toolkit-3.0.52-2</td>
+  <td><span class="badge badge-ok">3.0.52 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">croniter</span></td>
+  <td><span class="specifier">==6.0.0</span></td>
+  <td>python-croniter-5.0.1-7</td>
+  <td><span class="badge badge-fail">5.0.1 too old</span></td>
+  <td>python-croniter-6.2.2-3</td>
+  <td><span class="badge badge-ok">6.2.2 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">PyJWT[crypto]</span></td>
+  <td><span class="specifier">==2.12.1</span></td>
+  <td>python-jwt-2.10.1-3</td>
+  <td><span class="badge badge-fail">2.10.1 too old</span></td>
+  <td>python-jwt-2.12.1-2</td>
+  <td><span class="badge badge-ok">2.12.1 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">tzdata</span></td>
+  <td><span class="specifier">==2025.3</span></td>
+  <td>tzdata-2026a-1</td>
+  <td><span class="badge badge-warn">2026a</span></td>
+  <td>tzdata-2026b-1</td>
+  <td><span class="badge badge-warn">2026b</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">psutil</span></td>
+  <td><span class="specifier">==7.2.2</span></td>
+  <td>python-psutil-7.2.2-1</td>
+  <td><span class="badge badge-ok">7.2.2 ✓</span></td>
+  <td>python-psutil-7.2.2-4</td>
+  <td><span class="badge badge-ok">7.2.2 ✓</span></td>
+</tr>
+</tbody>
+</table>
+
+<!-- ===================== EXTRAS ===================== -->
+<h2>Extra Dependencies</h2>
+<p style="font-size:12px; color:#656d76; margin-bottom:12px;">Excluding meta extras <code>all</code>, <code>dev</code>, <code>termux-all</code>. Pytest-related packages from <code>dev</code> reserved.</p>
+<table>
+<thead>
+<tr>
+  <th>Extras</th>
+  <th>PyPI Package</th>
+  <th>Required</th>
+  <th>f44 RPM</th>
+  <th>f44</th>
+  <th>f45 RPM</th>
+  <th>f45</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="extra-tag">dev</span></td>
+  <td><span class="pkg-name">pytest</span></td>
+  <td><span class="specifier">==9.0.2</span></td>
+  <td>pytest-8.4.2-2</td>
+  <td><span class="badge badge-warn">8.4.2</span></td>
+  <td>pytest-9.0.3-1</td>
+  <td><span class="badge badge-ok">9.0.3 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">dev</span></td>
+  <td><span class="pkg-name">pytest-asyncio</span></td>
+  <td><span class="specifier">==1.3.0</span></td>
+  <td>python-pytest-asyncio-1.1.0-3</td>
+  <td><span class="badge badge-warn">1.1.0</span></td>
+  <td>python-pytest-asyncio-1.3.0-1</td>
+  <td><span class="badge badge-ok">1.3.0 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">dev</span></td>
+  <td><span class="pkg-name">pytest-xdist</span></td>
+  <td><span class="specifier">==3.8.0</span></td>
+  <td>python-pytest-xdist-3.7.0-6</td>
+  <td><span class="badge badge-warn">3.7.0</span></td>
+  <td>python-pytest-xdist-3.7.0-7</td>
+  <td><span class="badge badge-warn">3.7.0</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">dev</span></td>
+  <td><span class="pkg-name">pytest-split</span></td>
+  <td><span class="specifier">==0.11.0</span></td>
+  <td>python-pytest-split-0.11.0-1</td>
+  <td><span class="badge badge-ok">0.11.0 ✓</span></td>
+  <td>python-pytest-split-0.11.0-1</td>
+  <td><span class="badge badge-ok">0.11.0 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">anthropic</span></td>
+  <td><span class="pkg-name">anthropic</span></td>
+  <td><span class="specifier">==0.86.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">exa</span></td>
+  <td><span class="pkg-name">exa-py</span></td>
+  <td><span class="specifier">==2.10.2</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">firecrawl</span></td>
+  <td><span class="pkg-name">firecrawl-py</span></td>
+  <td><span class="specifier">==4.17.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">parallel-web</span></td>
+  <td><span class="pkg-name">parallel-web</span></td>
+  <td><span class="specifier">==0.4.2</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">fal</span></td>
+  <td><span class="pkg-name">fal-client</span></td>
+  <td><span class="specifier">==0.13.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">edge-tts</span></td>
+  <td><span class="pkg-name">edge-tts</span></td>
+  <td><span class="specifier">==7.2.7</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">modal</span></td>
+  <td><span class="pkg-name">modal</span></td>
+  <td><span class="specifier">==1.3.4</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">daytona</span></td>
+  <td><span class="pkg-name">daytona</span></td>
+  <td><span class="specifier">==0.155.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">vercel</span></td>
+  <td><span class="pkg-name">vercel</span></td>
+  <td><span class="specifier">==0.5.7</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">hindsight</span></td>
+  <td><span class="pkg-name">hindsight-client</span></td>
+  <td><span class="specifier">==0.6.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">messaging</span></td>
+  <td><span class="pkg-name">python-telegram-bot</span></td>
+  <td><span class="specifier">==22.6</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">messaging</span></td>
+  <td><span class="pkg-name">discord.py</span></td>
+  <td><span class="specifier">==2.7.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">messaging slack homeassistant sms</span></td>
+  <td><span class="pkg-name">aiohttp</span></td>
+  <td><span class="specifier">==3.13.3</span></td>
+  <td>python-aiohttp-3.13.3-4</td>
+  <td><span class="badge badge-ok">3.13.3 ✓</span></td>
+  <td>python-aiohttp-3.13.5-3</td>
+  <td><span class="badge badge-warn">3.13.5</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">messaging</span></td>
+  <td><span class="pkg-name">brotlicffi</span></td>
+  <td><span class="specifier">==1.2.0.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">messaging slack</span></td>
+  <td><span class="pkg-name">slack-bolt</span></td>
+  <td><span class="specifier">==1.27.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">messaging slack</span></td>
+  <td><span class="pkg-name">slack-sdk</span></td>
+  <td><span class="specifier">==3.40.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">messaging dingtalk feishu</span></td>
+  <td><span class="pkg-name">qrcode</span></td>
+  <td><span class="specifier">==7.4.2</span></td>
+  <td>python-qrcode-8.0-10</td>
+  <td><span class="badge badge-warn">8.0</span></td>
+  <td>python-qrcode-8.0-10</td>
+  <td><span class="badge badge-warn">8.0</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">matrix</span></td>
+  <td><span class="pkg-name">mautrix</span></td>
+  <td><span class="specifier">==0.21.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">matrix</span></td>
+  <td><span class="pkg-name">Markdown</span></td>
+  <td><span class="specifier">==3.10.2</span></td>
+  <td>python-markdown-3.10.2-1</td>
+  <td><span class="badge badge-ok">3.10.2 ✓</span></td>
+  <td>python-markdown-3.10.2-1</td>
+  <td><span class="badge badge-ok">3.10.2 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">matrix</span></td>
+  <td><span class="pkg-name">aiosqlite</span></td>
+  <td><span class="specifier">==0.22.1</span></td>
+  <td>python-aiosqlite-0.22.1-2</td>
+  <td><span class="badge badge-ok">0.22.1 ✓</span></td>
+  <td>python-aiosqlite-0.22.1-2</td>
+  <td><span class="badge badge-ok">0.22.1 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">matrix</span></td>
+  <td><span class="pkg-name">asyncpg</span></td>
+  <td><span class="specifier">==0.31.0</span></td>
+  <td>python-asyncpg-0.31.0-5</td>
+  <td><span class="badge badge-ok">0.31.0 ✓</span></td>
+  <td>python-asyncpg-0.31.0-9</td>
+  <td><span class="badge badge-ok">0.31.0 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">matrix</span></td>
+  <td><span class="pkg-name">aiohttp-socks</span></td>
+  <td><span class="specifier">==0.11.0</span></td>
+  <td>python-aiohttp-socks-0.10.1-6</td>
+  <td><span class="badge badge-warn">0.10.1</span></td>
+  <td>python-aiohttp-socks-0.10.1-6</td>
+  <td><span class="badge badge-warn">0.10.1</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">cli</span></td>
+  <td><span class="pkg-name">simple-term-menu</span></td>
+  <td><span class="specifier">==1.6.6</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">tts-premium</span></td>
+  <td><span class="pkg-name">elevenlabs</span></td>
+  <td><span class="specifier">==1.59.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">voice</span></td>
+  <td><span class="pkg-name">faster-whisper</span></td>
+  <td><span class="specifier">==1.2.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">voice</span></td>
+  <td><span class="pkg-name">sounddevice</span></td>
+  <td><span class="specifier">==0.5.5</span></td>
+  <td>python-sounddevice-0.5.3-2</td>
+  <td><span class="badge badge-warn">0.5.3</span></td>
+  <td>python-sounddevice-0.5.3-2</td>
+  <td><span class="badge badge-warn">0.5.3</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">voice</span></td>
+  <td><span class="pkg-name">numpy</span></td>
+  <td><span class="specifier">==2.4.3</span></td>
+  <td>numpy-2.4.3-1</td>
+  <td><span class="badge badge-ok">2.4.3 ✓</span></td>
+  <td>numpy-2.4.6-1</td>
+  <td><span class="badge badge-warn">2.4.6</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">pty</span></td>
+  <td><span class="pkg-name">ptyprocess</span></td>
+  <td><span class="specifier">==0.7.0</span></td>
+  <td>python-ptyprocess-0.7.0-15</td>
+  <td><span class="badge badge-ok">0.7.0 ✓</span></td>
+  <td>python-ptyprocess-0.7.0-15</td>
+  <td><span class="badge badge-ok">0.7.0 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">pty</span></td>
+  <td><span class="pkg-name">pywinpty</span></td>
+  <td><span class="specifier">==2.0.15</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">honcho</span></td>
+  <td><span class="pkg-name">honcho-ai</span></td>
+  <td><span class="specifier">==2.0.1</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">mcp computer-use</span></td>
+  <td><span class="pkg-name">mcp</span></td>
+  <td><span class="specifier">==1.26.0</span></td>
+  <td>python-mcp-1.26.0-1</td>
+  <td><span class="badge badge-ok">1.26.0 ✓</span></td>
+  <td>python-mcp-1.27.1-2</td>
+  <td><span class="badge badge-warn">1.27.1</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">acp</span></td>
+  <td><span class="pkg-name">agent-client-protocol</span></td>
+  <td><span class="specifier">==0.9.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">bedrock</span></td>
+  <td><span class="pkg-name">boto3</span></td>
+  <td><span class="specifier">==1.42.89</span></td>
+  <td>python-boto3-1.42.78-1</td>
+  <td><span class="badge badge-warn">1.42.78</span></td>
+  <td>python-boto3-1.43.14-1</td>
+  <td><span class="badge badge-warn">1.43.14</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">dingtalk</span></td>
+  <td><span class="pkg-name">dingtalk-stream</span></td>
+  <td><span class="specifier">==0.24.3</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">dingtalk</span></td>
+  <td><span class="pkg-name">alibabacloud-dingtalk</span></td>
+  <td><span class="specifier">==2.2.42</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">feishu</span></td>
+  <td><span class="pkg-name">lark-oapi</span></td>
+  <td><span class="specifier">==1.5.3</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">google</span></td>
+  <td><span class="pkg-name">google-api-python-client</span></td>
+  <td><span class="specifier">==2.194.0</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>google-api-python-client-2.196.0-1</td>
+  <td><span class="badge badge-ok">2.196.0 ✓</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">google</span></td>
+  <td><span class="pkg-name">google-auth-oauthlib</span></td>
+  <td><span class="specifier">==1.3.1</span></td>
+  <td>python-google-auth-oauthlib-1.2.4-2</td>
+  <td><span class="badge badge-warn">1.2.4</span></td>
+  <td>python-google-auth-oauthlib-1.2.4-2</td>
+  <td><span class="badge badge-warn">1.2.4</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">google</span></td>
+  <td><span class="pkg-name">google-auth-httplib2</span></td>
+  <td><span class="specifier">==0.3.1</span></td>
+  <td>google-auth-httplib2-0.3.0-2</td>
+  <td><span class="badge badge-warn">0.3.0</span></td>
+  <td>google-auth-httplib2-0.4.0-1</td>
+  <td><span class="badge badge-warn">0.4.0</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">youtube</span></td>
+  <td><span class="pkg-name">youtube-transcript-api</span></td>
+  <td><span class="specifier">==1.2.4</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+  <td>—</td>
+  <td><span class="badge badge-fail">not packaged</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">web</span></td>
+  <td><span class="pkg-name">fastapi</span></td>
+  <td><span class="specifier">==0.133.1</span></td>
+  <td>python-fastapi-0.135.1-1</td>
+  <td><span class="badge badge-warn">0.135.1</span></td>
+  <td>python-fastapi-0.136.3-3</td>
+  <td><span class="badge badge-warn">0.136.3</span></td>
+</tr>
+<tr>
+  <td><span class="extra-tag">web</span></td>
+  <td><span class="pkg-name">uvicorn[standard]</span></td>
+  <td><span class="specifier">==0.41.0</span></td>
+  <td>python-uvicorn-0.40.0-1</td>
+  <td><span class="badge badge-warn">0.40.0</span></td>
+  <td>python-uvicorn-0.40.0-1</td>
+  <td><span class="badge badge-warn">0.40.0</span></td>
+</tr>
+</tbody>
+</table>
+
+<!-- ===================== BLOCKERS ===================== -->
+<h2>Packages Not Available on Either Release (27)</h2>
+<div class="blockers-list">
+  <span class="blocker-item">fire</span>
+  <span class="blocker-item">anthropic</span>
+  <span class="blocker-item">exa-py</span>
+  <span class="blocker-item">firecrawl-py</span>
+  <span class="blocker-item">parallel-web</span>
+  <span class="blocker-item">fal-client</span>
+  <span class="blocker-item">edge-tts</span>
+  <span class="blocker-item">modal</span>
+  <span class="blocker-item">daytona</span>
+  <span class="blocker-item">vercel</span>
+  <span class="blocker-item">hindsight-client</span>
+  <span class="blocker-item">python-telegram-bot</span>
+  <span class="blocker-item">discord.py</span>
+  <span class="blocker-item">brotlicffi</span>
+  <span class="blocker-item">slack-bolt</span>
+  <span class="blocker-item">slack-sdk</span>
+  <span class="blocker-item">mautrix</span>
+  <span class="blocker-item">simple-term-menu</span>
+  <span class="blocker-item">elevenlabs</span>
+  <span class="blocker-item">faster-whisper</span>
+  <span class="blocker-item">pywinpty</span>
+  <span class="blocker-item">honcho-ai</span>
+  <span class="blocker-item">agent-client-protocol</span>
+  <span class="blocker-item">dingtalk-stream</span>
+  <span class="blocker-item">alibabacloud-dingtalk</span>
+  <span class="blocker-item">lark-oapi</span>
+  <span class="blocker-item">youtube-transcript-api</span>
+</div>
+
+<div class="see-also">
+  📋 <a href="hermes-agent-blockers-analysis.html">Detailed blocker buildability analysis →</a><br>
+  ✅ <a href="hermes-agent-packaging-checklist.html">Packaging checklist →</a> — trackable checklist of 20 missing dependencies to package
+</div>
+
+<!-- ===================== F44-SPECIFIC GAPS ===================== -->
+<h2>f44-Specific Gaps</h2>
+<p style="font-size:12px; color:#656d76; margin-bottom:12px;">Packages available on f45 but either missing or too old on f44.</p>
+<table>
+<thead>
+<tr><th>PyPI Package</th><th>Required</th><th>f44 RPM</th><th>f45 RPM</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="pkg-name">croniter</span></td>
+  <td><span class="specifier">==6.0.0</span></td>
+  <td>python-croniter-5.0.1-7 <span class="badge badge-fail">too old</span></td>
+  <td>python-croniter-6.2.2-3 <span class="badge badge-ok">✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">PyJWT</span></td>
+  <td><span class="specifier">==2.12.1</span></td>
+  <td>python-jwt-2.10.1-3 <span class="badge badge-fail">too old</span></td>
+  <td>python-jwt-2.12.1-2 <span class="badge badge-ok">✓</span></td>
+</tr>
+<tr>
+  <td><span class="pkg-name">google-api-python-client</span></td>
+  <td><span class="specifier">==2.194.0</span></td>
+  <td>— <span class="badge badge-fail">not packaged</span></td>
+  <td>google-api-python-client-2.196.0-1 <span class="badge badge-ok">✓</span></td>
+</tr>
+</tbody>
+</table>
+
+<p style="margin-top:24px; font-size:11px; color:#656d76; text-align:center;">Generated by querying Koji <code>latest-build</code> on 2026-05-25. Extra <code>all</code>, <code>dev</code>, <code>termux-all</code> excluded per policy (pytest packages reserved).</p>
+
+</body>
+</html>

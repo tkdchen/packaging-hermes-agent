@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hermes-agent — Packaging Checklist</title>
+<style>
+  :root {
+    --ok: #1a7f37; --warn: #9a6700; --fail: #cf222e;
+    --bg: #ffffff; --fg: #1f2328; --border: #d0d7de;
+    --stripe: #f6f8fa; --header-bg: #f6f8fa;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px; line-height: 1.5; color: var(--fg);
+    background: var(--bg); padding: 24px; max-width: 1200px; margin: 0 auto;
+  }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  h2 { font-size: 17px; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 14px; margin: 20px 0 8px; color: #656d76; }
+  .subtitle { color: #656d76; margin-bottom: 24px; font-size: 13px; }
+  .back-link { font-size: 13px; margin-bottom: 20px; }
+  .back-link a { color: #0969da; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
+  th { text-align: left; padding: 8px 10px; background: var(--header-bg); border: 1px solid var(--border); font-weight: 600; white-space: nowrap; }
+  td { padding: 7px 10px; border: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--stripe); }
+
+  .checkbox { display: inline-block; width: 18px; height: 18px; border: 2px solid #8b949e; border-radius: 3px; margin-right: 8px; vertical-align: middle; cursor: pointer; position: relative; flex-shrink: 0; }
+  .checkbox.checked { background: var(--ok); border-color: var(--ok); }
+  .checkbox.checked::after { content: "✓"; position: absolute; top: -1px; left: 2px; color: white; font-size: 12px; font-weight: bold; }
+  .td-check { width: 32px; text-align: center; }
+
+  .pkg-name { font-weight:600; font-family: "SF Mono", "Menlo", monospace; font-size: 12px; }
+  .blocks { font-family: "SF Mono", "Menlo", monospace; font-size: 11px; }
+  .notes { font-size: 11px; color: #656d76; }
+  .depends-on { font-size: 11px; color: #8250df; }
+
+  .badge { display:inline-block; padding:1px 6px; border-radius:2em; font-size:10px; font-weight:600; white-space:nowrap; }
+  .badge-ok { background:#dafbe1; color:var(--ok); }
+  .badge-warn { background:#fff8c5; color:var(--warn); }
+  .badge-fail { background:#ffebe9; color:var(--fail); }
+  .badge-low { background:#dafbe1; color:var(--ok); }
+  .badge-med { background:#fff8c5; color:var(--warn); }
+  .badge-high { background:#ffebe9; color:var(--fail); }
+  .badge-avail { background:#ddf4ff; color:#0969da; }
+  .badge-na { background:#f6f8fa; color:#8b949e; }
+
+  .summary-cards { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .summary-card {
+    flex: 1; min-width: 140px; border: 1px solid var(--border);
+    border-radius: 6px; padding: 16px; text-align: center;
+  }
+  .summary-card h3 { font-size: 12px; font-weight: 600; color: #656d76; margin:0 0 8px; text-transform: uppercase; border:0; }
+  .summary-card .number { font-size: 36px; font-weight: 700; }
+  .summary-card .label { font-size: 12px; color: #656d76; }
+
+  .legend { font-size: 12px; color: #656d76; margin-bottom: 12px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+  .section-note { font-size: 11px; color: #656d76; margin: -8px 0 10px 0; }
+</style>
+</head>
+<body>
+
+<h1>hermes-agent — Packaging Checklist</h1>
+<p class="subtitle">Track progress packaging hermes-agent extras for Fedora f44 &amp; f45 — 2026-05-25</p>
+<p class="back-link">← <a href="hermes-agent-blockers-analysis.html">Blocker analysis</a> | <a href="hermes-agent-buildability.html">Main report</a></p>
+
+<div class="summary-cards">
+  <div class="summary-card">
+    <h3>To Package</h3>
+    <div class="number">47</div>
+    <div class="label">total items</div>
+  </div>
+  <div class="summary-card">
+    <h3>Ready Now</h3>
+    <div class="number" style="color:var(--ok)">12</div>
+    <div class="label">no deps missing</div>
+  </div>
+  <div class="summary-card">
+    <h3>Blocked</h3>
+    <div class="number" style="color:var(--fail)">13</div>
+    <div class="label">need deps first</div>
+  </div>
+  <div class="summary-card">
+    <h3>Transitive</h3>
+    <div class="number" style="color:#8250df">20</div>
+    <div class="label">missing deps</div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="badge badge-ok">ready</span> all deps in Fedora</span>
+  <span><span class="badge badge-warn">waiting</span> needs 1 dep first</span>
+  <span><span class="badge badge-fail">blocked</span> needs ≥2 deps</span>
+  <span><span class="badge badge-na">n/a</span> not applicable</span>
+  <span><span class="badge badge-low">low</span> <span class="badge badge-med">med</span> <span class="badge badge-high">high</span> transitive dep complexity</span>
+</div>
+
+<!-- ==================== DIRECT BLOCKERS ==================== -->
+<h2>Part A — Direct hermes-agent Packages (27)</h2>
+<p class="section-note">These are the packages required by hermes-agent extras that are not yet in Fedora. Package them in the order below.</p>
+
+<h3>A.1 — Buildable Now (all deps in Fedora, package immediately)</h3>
+<table>
+<thead>
+<tr><th class="td-check"></th><th>Package</th><th>hermes-agent Extra</th><th>Transitive Deps to Check</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">simple-term-menu</span> <span class="specifier">==1.6.6</span></td><td>cli</td><td class="notes">zero deps</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">dingtalk-stream</span> <span class="specifier">==0.24.3</span></td><td>dingtalk</td><td class="notes">zero deps</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">alibabacloud-dingtalk</span> <span class="specifier">==2.2.42</span></td><td>dingtalk</td><td class="notes">zero deps</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">brotlicffi</span> <span class="specifier">==1.2.0.1</span></td><td>messaging</td><td class="notes">cffi ✅</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">youtube-transcript-api</span> <span class="specifier">==1.2.4</span></td><td>youtube</td><td class="notes">defusedxml ✅, requests ✅</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">fire</span> <span class="specifier">==0.7.1</span></td><td><em>base</em></td><td class="notes">termcolor, setuptools, pip, pylint, pytest, hypothesis, Levenshtein — all ✅</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">exa-py</span> <span class="specifier">==2.10.2</span></td><td>exa</td><td class="notes">httpcore, httpx, openai, pydantic, python-dotenv, requests, typing-extensions — all ✅</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">firecrawl-py</span> <span class="specifier">==4.17.0</span></td><td>firecrawl</td><td class="notes">requests, httpx, python-dotenv, websockets, nest-asyncio, pydantic, aiohttp — all ✅</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">fal-client</span> <span class="specifier">==0.13.1</span></td><td>fal</td><td class="notes">aiofiles, httpx, httpx-sse, msgpack, websockets — all ✅ (asyncstdlib f45 ✅, f44 ❌)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">edge-tts</span> <span class="specifier">==7.2.7</span></td><td>edge-tts</td><td class="notes">aiohttp, certifi, tabulate, typing-extensions — all ✅</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">hindsight-client</span> <span class="specifier">==0.6.1</span></td><td>hindsight</td><td class="notes">aiohttp-retry, aiohttp, pydantic, python-dateutil, typing-extensions, urllib3, requests — all ✅</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">slack-sdk</span> <span class="specifier">==3.40.1</span></td><td>messaging, slack</td><td class="notes">aiodns, aiohttp, boto3, SQLAlchemy, websockets, websocket-client — all ✅</td></tr>
+</tbody>
+</table>
+
+<h3>A.2 — Needs One Transitive Dep First</h3>
+<table>
+<thead>
+<tr><th class="td-check"></th><th>Package</th><th>hermes-agent Extra</th><th>Waiting On</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">slack-bolt</span> <span class="specifier">==1.27.0</span></td><td>messaging, slack</td><td class="depends-on">⬅ slack-sdk (A.1)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">python-telegram-bot</span> <span class="specifier">==22.6</span></td><td>messaging, termux</td><td class="depends-on">⬅ apscheduler (B.1)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">vercel</span> <span class="specifier">==0.5.7</span></td><td>vercel</td><td class="depends-on">⬅ vercel-workers (B.1)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">honcho-ai</span> <span class="specifier">==2.0.1</span></td><td>honcho</td><td class="depends-on">⬅ honcho-cli (B.1)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">elevenlabs</span> <span class="specifier">==1.59.0</span></td><td>tts-premium</td><td class="depends-on">⬅ pyaudio (B.1 update)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">lark-oapi</span> <span class="specifier">==1.5.3</span></td><td>feishu</td><td class="depends-on">⬅ pycryptodome (B.2)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">parallel-web</span> <span class="specifier">==0.4.2</span></td><td>parallel-web</td><td class="depends-on">⬅ httpx-aiohttp (B.1) — same dep as anthropic</td></tr>
+</tbody>
+</table>
+
+<h3>A.3 — Blocked (needs ≥2 transitive deps)</h3>
+<table>
+<thead>
+<tr><th class="td-check"></th><th>Package</th><th>hermes-agent Extra</th><th>Waiting On</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">anthropic</span> <span class="specifier">==0.86.0</span></td><td>anthropic</td><td class="depends-on">⬅ httpx-aiohttp (B.1) + standardwebhooks (B.1)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">modal</span> <span class="specifier">==1.3.4</span></td><td>modal</td><td class="depends-on">⬅ grpclib (B.1) + synchronicity (B.2)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">discord.py</span> <span class="specifier">==2.7.1</span></td><td>messaging</td><td class="depends-on">⬅ audioop-lts (B.1) + davey (B.1) + imghdr-lts (B.1)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">mautrix</span> <span class="specifier">==0.21.0</span></td><td>matrix</td><td class="depends-on">⬅ pycryptodome (B.2) + python-olm (B.2)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">agent-client-protocol</span> <span class="specifier">==0.9.0</span></td><td>acp</td><td class="depends-on">⬅ logfire (B.2) + opentelemetry-sdk (B.2)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">daytona</span> <span class="specifier">==0.155.0</span></td><td>daytona</td><td class="depends-on">⬅ httpx-ws (B.1) + obstore (B.2) + opentelemetry-sdk (B.2) + daytona-api-client* (B.3)</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">faster-whisper</span> <span class="specifier">==1.2.1</span></td><td>voice</td><td class="depends-on">⬅ ctranslate2 (B.3) + onnxruntime (B.3)</td></tr>
+</tbody>
+</table>
+
+<h3>A.4 — Not Applicable / Unknown</h3>
+<table>
+<thead>
+<tr><th class="td-check"></th><th>Package</th><th>hermes-agent Extra</th><th>Reason</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">pywinpty</span> <span class="specifier">==2.0.15</span></td><td>pty</td><td class="notes">Windows-only — winpty bindings. Irrelevant for Fedora.</td></tr>
+</tbody>
+</table>
+
+<!-- ==================== TRANSITIVE DEPS ==================== -->
+<h2>Part B — Missing Transitive Dependencies (20)</h2>
+<p class="section-note">These are not direct hermes-agent deps, but are required by the blocked packages above. Package these first to unlock A.2 and A.3.</p>
+
+<h3>B.1 — Low Complexity (pure Python, 0–1 transitive deps)</h3>
+<table>
+<thead>
+<tr><th class="td-check"></th><th>Dependency</th><th>Unlocks</th><th>Complexity</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">apscheduler</span></td><td class="blocks">python-telegram-bot</td><td><span class="badge badge-low">low</span></td><td class="notes">Pure Python job scheduler. No unusual deps.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">audioop-lts</span></td><td class="blocks">discord.py</td><td><span class="badge badge-low">low</span></td><td class="notes">Backport of removed Python stdlib module. Tiny, self-contained.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">davey</span></td><td class="blocks">discord.py</td><td><span class="badge badge-low">low</span></td><td class="notes">Discord voice encryption. Pure Python.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">honcho-cli</span></td><td class="blocks">honcho-ai</td><td><span class="badge badge-low">low</span></td><td class="notes">CLI companion. Could bundle as subpackage of honcho-ai.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">httpx-aiohttp</span></td><td class="blocks">anthropic</td><td><span class="badge badge-low">low</span></td><td class="notes">Thin aiohttp transport for httpx. Deps: httpx ✅, aiohttp ✅.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">httpx-ws</span></td><td class="blocks">daytona</td><td><span class="badge badge-low">low</span></td><td class="notes">WebSocket transport for httpx. Deps: httpx ✅, wsproto ✅.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">imghdr-lts</span></td><td class="blocks">discord.py</td><td><span class="badge badge-low">low</span></td><td class="notes">Backport of removed Python stdlib module. Tiny, self-contained.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">standardwebhooks</span></td><td class="blocks">anthropic</td><td><span class="badge badge-low">low</span></td><td class="notes">Webhook signing/verification. Pure Python, no external deps.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">vercel-workers</span></td><td class="blocks">vercel</td><td><span class="badge badge-low">low</span></td><td class="notes">Vercel platform companion. Could bundle with vercel.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">grpclib</span></td><td class="blocks">modal</td><td><span class="badge badge-low">low</span></td><td class="notes">Pure-Python gRPC. Deps: protobuf ✅, h2 (check).</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">pyaudio</span></td><td class="blocks">elevenlabs</td><td><span class="badge badge-avail">update</span></td><td class="notes">f44 has 0.2.13 (old); f45 missing. Update + branch. portaudio ✅.</td></tr>
+</tbody>
+</table>
+
+<h3>B.2 — Medium Complexity (C extensions, transitive deps, system libs)</h3>
+<table>
+<thead>
+<tr><th class="td-check"></th><th>Dependency</th><th>Unlocks</th><th>Complexity</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">pycryptodome</span></td><td class="blocks">mautrix, lark-oapi</td><td><span class="badge badge-med">med</span></td><td class="notes">C extension for crypto. ≠ python-pycryptodomex (in Fedora). Self-contained C.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">python-olm</span></td><td class="blocks">mautrix</td><td><span class="badge badge-med">med</span></td><td class="notes">Python bindings for libolm. <strong>Package libolm C library first.</strong></td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">logfire</span></td><td class="blocks">agent-client-protocol</td><td><span class="badge badge-med">med</span></td><td class="notes">Observability SDK. May pull in opentelemetry deps.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">obstore</span></td><td class="blocks">daytona</td><td><span class="badge badge-med">med</span></td><td class="notes">Object store abstraction. Likely Rust/C extensions.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">synchronicity</span></td><td class="blocks">modal</td><td><span class="badge badge-med">med</span></td><td class="notes">Modal Labs async bridge. Could bundle with modal.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">opentelemetry-sdk</span></td><td class="blocks">daytona, agent-client-protocol</td><td><span class="badge badge-med">med</span></td><td class="notes">API exists (python-opentelemetry-api). SDK + exporter + instrumentation subpackages needed.</td></tr>
+</tbody>
+</table>
+
+<h3>B.3 — High Complexity (large C++ projects, monorepo suites)</h3>
+<table>
+<thead>
+<tr><th class="td-check"></th><th>Dependency</th><th>Unlocks</th><th>Complexity</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">ctranslate2</span></td><td class="blocks">faster-whisper</td><td><span class="badge badge-high">high</span></td><td class="notes">C++ inference engine (cmake). Large codebase.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">onnxruntime</span></td><td class="blocks">faster-whisper</td><td><span class="badge badge-high">high</span></td><td class="notes">Microsoft ONNX runtime. Very large C++ project. Likely impractical.</td></tr>
+<tr><td class="td-check"><span class="checkbox"></span></td><td><span class="pkg-name">daytona-api-client</span> *</td><td class="blocks">daytona</td><td><span class="badge badge-high">high</span></td><td class="notes">4 packages (api-client, api-client-async, toolbox-api-client, toolbox-api-client-async) at ==0.181.0. Auto-generated from OpenAPI. Daytona SDK monorepo.</td></tr>
+</tbody>
+</table>
+
+<!-- ==================== UNLOCK TABLE ==================== -->
+<h2>What Gets Unlocked</h2>
+<table>
+<thead>
+<tr><th>When</th><th>Transitive deps done</th><th>Direct packages unlocked</th><th>hermes-agent extras enabled</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Now</strong></td>
+  <td class="notes">—</td>
+  <td>12 (A.1)</td>
+  <td class="blocks">cli · dingtalk · youtube · firecrawl · exa · fal · edge-tts · hindsight · messaging/<em>partial</em> · slack/<em>partial</em></td>
+</tr>
+<tr>
+  <td><strong>+ B.1</strong></td>
+  <td class="notes">11 low-complexity</td>
+  <td>+ slack-bolt · python-telegram-bot · vercel · honcho-ai · elevenlabs · anthropic · parallel-web · modal/<em>partial</em> · discord.py · daytona/<em>partial</em></td>
+  <td class="blocks">slack · messaging · vercel · honcho · tts-premium · anthropic · parallel-web · modal/<em>partial</em> · daytona/<em>partial</em></td>
+</tr>
+<tr>
+  <td><strong>+ B.2</strong></td>
+  <td class="notes">6 medium</td>
+  <td>+ lark-oapi · mautrix · agent-client-protocol · daytona/<em>partial</em></td>
+  <td class="blocks">feishu · matrix · acp</td>
+</tr>
+<tr>
+  <td><strong>+ B.3</strong></td>
+  <td class="notes">3 high</td>
+  <td>+ faster-whisper · daytona</td>
+  <td class="blocks">voice · daytona</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Notes</h2>
+<ul style="font-size:12px; color:#656d76; line-height:1.8; margin-left:20px;">
+  <li><strong>pyaudio</strong> exists on f44 as <code>pyaudio-0.2.13-11</code> but needs update for ≥0.2.14 and f45 branch.</li>
+  <li><strong>python-pycryptodomex</strong> (3.23.0) is in Fedora but is a <em>different</em> package from <strong>pycryptodome</strong>. Verify compatibility.</li>
+  <li><strong>daytona-api-client</strong> packages (×4) are auto-generated OpenAPI clients. All must be at version 0.181.0.</li>
+  <li><strong>synchronicity</strong> and <strong>honcho-cli</strong> could be bundled as subpackages of modal and honcho-ai.</li>
+  <li><strong>faster-whisper</strong> (ctranslate2 + onnxruntime) is likely impractical for a single voice extra.</li>
+  <li><strong>pywinpty</strong> is Windows-only — skip entirely.</li>
+  <li>Test/doc-only deps excluded from this checklist (can be skipped during packaging).</li>
+</ul>
+
+<p style="margin-top:24px; font-size:11px; color:#656d76; text-align:center;">
+Generated 2026-05-25 · <a href="hermes-agent-buildability.html">Main report</a> · <a href="hermes-agent-blockers-analysis.html">Blocker analysis</a>
+</p>
+
+</body>
+</html>
