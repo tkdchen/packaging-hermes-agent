@@ -60,4 +60,5 @@ python3.13 -m unittest discover
 
 
 %changelog
-%autochangelog
+* Wed May 27 2025 Chenxiong Qi <qcxhome@gmail.com>
+- Initial package
