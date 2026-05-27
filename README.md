@@ -35,9 +35,9 @@ Builds are managed within Copr project [hermes-agent] in Fedora Copr build syste
 
 Feature sets could be determined by either dependency extras or referening Hermes [Features Overview].
 
-At this stage, feature sets may include:
+At current stage, feature sets may include:
 
-- Default. 
+- `Default`. Minimal set of packages to run the agent with basic functionalities. Package set maps to `dependencies` defined in `pyproject.toml`.
 
 ## Packages List
 
