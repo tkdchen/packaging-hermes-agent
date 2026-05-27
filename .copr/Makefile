@@ -6,7 +6,7 @@ srpm:
 	if [ -n "$(local)" ]; then \
 		mock --buildsrpm --spec $(spec) --sources $$(dirname $(spec)) --resultdir $$(dirname $(spec)); \
 	else \
-		grep -E "^Patch[0-9]+: " $(spec) | while read -r prefix filename; do \
+		grep -E "^Patch[0-9]*: " $(spec) | while read -r prefix filename; do \
 			cp "$$(dirname $(spec))/${filename}" /builddir/build/SOURCES/; \
 		done; \
 	fi; \
