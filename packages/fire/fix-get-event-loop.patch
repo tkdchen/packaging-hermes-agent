@@ -1,0 +1,13 @@
+diff -urN fire-0.7.1.orig/fire/core.py fire-0.7.1/fire/core.py
+--- fire-0.7.1.orig/fire/core.py	2026-05-27 21:58:15.033028962 +0800
++++ fire-0.7.1/fire/core.py	2026-05-27 21:57:24.807820892 +0800
+@@ -678,7 +678,8 @@
+ 
+   # Call the function.
+   if inspectutils.IsCoroutineFunction(fn):
+-    loop = asyncio.get_event_loop()
++    loop = asyncio.new_event_loop()
++    asyncio.set_event_loop(loop)
+     component = loop.run_until_complete(fn(*varargs, **kwargs))
+   else:
+     component = fn(*varargs, **kwargs)
