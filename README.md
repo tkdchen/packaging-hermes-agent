@@ -1,6 +1,6 @@
 # Exploring Packaging hermes-agent
 
-Packaging `hermes-agent==0.14.0` and its dependencies for Fedora f44 and rawhide (f45).
+Packaging `hermes-agent==0.14.0` and its dependencies for Fedora rawhide (f45).
 
 Reference following HTML documents for detailed buildability analysis.
 
