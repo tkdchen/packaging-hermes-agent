@@ -11,7 +11,7 @@ endif
 .PHONY: srpm
 srpm:
 	if [ -n "$(local)" ]; then \
-		echo python3 -m pip download --no-binary :all: --no-deps --dest ~/rpmbuild/SOURCES "$(pypi_name)==$(version)"; \
+		python3 -m pip download --no-binary :all: --no-deps --dest ~/rpmbuild/SOURCES "$(pypi_name)==$(version)"; \
 	fi; \
 	grep -E "^Patch: " $(spec) | while read -r prefix filename; do \
 		echo "Patch: $${filename}"; \
