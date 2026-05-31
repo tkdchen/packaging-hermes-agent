@@ -1,14 +1,21 @@
+pypi_name = $(shell grep -m 1 "^%global pypi_name " $(spec) | cut -d' ' -f3)
+# sdist_name=$(shell echo $(pypi_name) | tr - _)
+version = $(shell rpm -q --queryformat '%{version}\n' --specfile $(spec) | head -n 1)
+
+ifeq ($(local),true)
+sources_dir = ~/rpmbuild/SOURCES/
+else
+sources_dir = /builddir/build/SOURCES/
+endif
+
+.PHONY: srpm
 srpm:
-	if [ -z "$(local)" ]; then dnf install -y rpmbuild python3-pip rpm; fi
-	pypi_name=$$(grep -m 1 "^%global pypi_name " $(spec) | cut -d' ' -f3); \
-	version=$$(rpm -q --queryformat '%{version}\n' --specfile $(spec) | head -n 1); \
-	python3 -m pip download --no-binary :all: --no-deps "$${pypi_name}==$${version}"; \
 	if [ -n "$(local)" ]; then \
-		mock --buildsrpm --spec $(spec) --sources $$(dirname $(spec)) --resultdir $$(dirname $(spec)); \
-	else \
-		grep -E "^Patch[0-9]*: " $(spec) | while read -r prefix filename; do \
-			cp "$$(dirname $(spec))/$${filename}" /builddir/build/SOURCES/; \
-		done; \
+		echo python3 -m pip download --no-binary :all: --no-deps --dest ~/rpmbuild/SOURCES "$(pypi_name)==$(version)"; \
 	fi; \
+	grep -E "^Patch: " $(spec) | while read -r prefix filename; do \
+		echo "Patch: $${filename}"; \
+		cp "$$(dirname $(spec))/$${filename}" $(sources_dir); \
+	done; \
 	srpm_file=$$(rpmbuild -bs $(spec) | grep "^Wrote:" | cut -d' ' -f2) ; \
 	cp "$${srpm_file}" "$(outdir)"
