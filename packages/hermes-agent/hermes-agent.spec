@@ -22,7 +22,7 @@ BuildRequires:  python3dist(pytest-split)
 
 
 %global _description %{expand:
-This is package 'hermes-agent' generated automatically by pyp2spec.}
+The agent that grows with you}
 
 %description %_description
 
