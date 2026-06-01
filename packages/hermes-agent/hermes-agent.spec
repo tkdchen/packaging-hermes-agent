@@ -29,6 +29,7 @@ The agent that grows with you}
 %package -n     hermes-agent
 Summary:        %{summary}
 
+Requires:       chromium
 Requires:       python3dist(edge-tts) == 7.2.7-1
 
 %description -n hermes-agent %_description
