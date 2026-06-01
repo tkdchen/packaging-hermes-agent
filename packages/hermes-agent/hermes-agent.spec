@@ -20,8 +20,6 @@ BuildRequires:  python3dist(pytest-xdist)
 BuildRequires:  python3dist(pytest-asyncio)
 BuildRequires:  python3dist(pytest-split)
 
-Requires:       python3dist(edgs-tts) == 7.2.7-1
-
 
 %global _description %{expand:
 The agent that grows with you}
@@ -31,6 +29,7 @@ The agent that grows with you}
 %package -n     hermes-agent
 Summary:        %{summary}
 
+Requires:       python3dist(edgs-tts) == 7.2.7-1
 
 %description -n hermes-agent %_description
 
