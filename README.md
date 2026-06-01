@@ -49,7 +49,7 @@ At current stage, feature sets may include:
 - [ ] `youtube-transcript-api==1.2.4`
   - [ ] `defusedxml>=0.7.1,<0.8.0`
   - [ ] `requests`
-- [ ] `fire==0.7.1`
+- [x] ~~`fire==0.7.1`~~ - [Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-fire/) in Fedora Copr.
   - [ ] `termcolor<3.2.0`
   - [ ] `setuptools<=80.9.0`
   - [ ] `pip`
@@ -60,11 +60,11 @@ At current stage, feature sets may include:
 - [ ] `exa-py==2.10.2`
   - [ ] `httpcore>=1.0.9`
   - [ ] `httpx>=0.28.1`
-  - [ ] `openai>=1.48`
+  - [x] ~~`openai>=1.48`~~ - Available in Fedora repos. [Pull request](https://src.fedoraproject.org/rpms/python-openai/pull-request/2) of building upstream version `2.24.0`.
   - [ ] `pydantic>=2.10.6`
   - [ ] `python-dotenv>=1.0.1`
   - [ ] `requests>=2.32.3`
-  - [ ] `typing-extensions>=4.12.2`
+  - [x] ~~`typing-extensions>=4.12.2`~~ - Available in Fedora repos.
 - [ ] `firecrawl-py==4.17.0`
   - [ ] `requests`
   - [ ] `httpx`
@@ -84,13 +84,13 @@ At current stage, feature sets may include:
   - [ ] `aiohttp>=3.8.0,<4.0.0`
   - [ ] `certifi>=2023.11.17`
   - [ ] `tabulate>=0.4.4,<1.0.0`
-  - [ ] `typing-extensions>=4.1.0,<5.0.0`
+  - [x] ~~`typing-extensions>=4.1.0,<5.0.0`~~
 - [ ] `hindsight-client==0.6.1`
   - [ ] `aiohttp-retry>=2.8.3`
   - [ ] `aiohttp>=3.8.4`
   - [ ] `pydantic>=2`
   - [ ] `python-dateutil>=2.8.2`
-  - [ ] `typing-extensions>=4.7.1`
+  - [x] ~~`typing-extensions>=4.7.1`~~
   - [ ] `urllib3>=2.1.0,<3.0.0`
   - [ ] `requests>=2.33.0`
 - [ ] `slack-sdk==3.40.1`
@@ -115,7 +115,7 @@ At current stage, feature sets may include:
   - [ ] `httpx>=0.27.0`
   - [ ] `pydantic>=2.7.0`
   - [ ] `anyio>=4.0.0`
-  - [ ] `typing-extensions>=4.0.0`
+  - [x] ~~`typing-extensions>=4.0.0`~~
   - [ ] `python-dotenv`
   - [ ] `websockets>=12.0`
   - [ ] `cbor2>=5.8.0,<6`
@@ -123,7 +123,7 @@ At current stage, feature sets may include:
 - [ ] `honcho-ai==2.0.1`
   - [ ] `httpx>=0.28.0,<1`
   - [ ] `pydantic>=2.0.0,<3`
-  - [ ] `typing-extensions>=4.12.0`
+  - [x] ~~`typing-extensions>=4.12.0`~~
   - [ ] `honcho-cli>=0.1.0`
 - [ ] `elevenlabs==1.59.0`
   - [ ] `httpx>=0.21.2`
@@ -149,7 +149,7 @@ At current stage, feature sets may include:
   - [ ] `httpx>=0.23.0,<1`
   - [ ] `pydantic>=1.9.0,<3`
   - [ ] `sniffio`
-  - [ ] `typing-extensions>=4.10,<5`
+  - [x] ~~`typing-extensions>=4.10,<5`~~
   - [ ] `aiohttp`
   - [ ] `httpx-aiohttp>=0.1.9`
 - [ ] `anthropic==0.86.0`
@@ -160,7 +160,7 @@ At current stage, feature sets may include:
   - [ ] `jiter>=0.4.0,<1`
   - [ ] `pydantic>=1.9.0,<3`
   - [ ] `sniffio`
-  - [ ] `typing-extensions>=4.14,<5`
+  - [x] ~~`typing-extensions>=4.14,<5`~~
   - [ ] `aiohttp`
   - [ ] `boto3>=1.28.57`
   - [ ] `botocore>=1.31.57`
@@ -183,7 +183,7 @@ At current stage, feature sets may include:
 - [ ] `discord.py==2.7.1`
   - [ ] `aiohttp>=3.7.4,<4`
   - [ ] `PyNaCl>=1.5.0,<1.6`
-  - [ ] `typing-extensions>=4.3,<5`
+  - [x] ~~`typing-extensions>=4.3,<5`~~
   - [ ] `tzdata`
   - [ ] `orjson>=3.5.4`
   - [ ] `aiodns>=1.1`
@@ -217,7 +217,7 @@ At current stage, feature sets may include:
   - [ ] `python-multipart>=0.0.15,<0.1.0`
   - [ ] `urllib3>=2.1.0,<3.0.0`
   - [ ] `wsproto>=1.2.0,<2.0.0`
-  - [ ] `typing-extensions>=4.0.0`
+  - [x] ~~`typing-extensions>=4.0.0`~~
   - [ ] `toml>=0.10.0,<0.11.0`
   - [ ] `opentelemetry-api>=1.27.0,<2.0.0`
   - [ ] `daytona-api-client==0.181.0`
