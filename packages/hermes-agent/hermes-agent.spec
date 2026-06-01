@@ -29,7 +29,7 @@ The agent that grows with you}
 %package -n     hermes-agent
 Summary:        %{summary}
 
-Requires:       python3dist(edgs-tts) == 7.2.7-1
+Requires:       python3dist(edge-tts) == 7.2.7-1
 
 %description -n hermes-agent %_description
 
