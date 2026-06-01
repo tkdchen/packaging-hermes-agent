@@ -20,6 +20,8 @@ BuildRequires:  python3dist(pytest-xdist)
 BuildRequires:  python3dist(pytest-asyncio)
 BuildRequires:  python3dist(pytest-split)
 
+Requires:       python3dist(edgs-tts) == 7.2.7-1
+
 
 %global _description %{expand:
 The agent that grows with you}
@@ -117,5 +119,4 @@ PYTHONPATH=. %pytest \
 
 
 %changelog
-* Thu May 28 2026 Chenxiong Qi <qcxhome@gmail.com>
-- Build hermes-agent==0.14.0
+%autochangelog
