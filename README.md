@@ -37,7 +37,8 @@ Feature sets could be determined by either dependency extras or referening Herme
 
 At current stage, feature sets may include:
 
-- `Default`. Minimal set of packages to run the agent with basic functionalities. Package set maps to `dependencies` defined in `pyproject.toml`.
+- `Default` https://github.com/tkdchen/packaging-hermes-agent/issues/1. Minimal set of packages to run the agent with basic functionalities. Package set maps to `dependencies` defined in `pyproject.toml`.
+- `all` https://github.com/tkdchen/packaging-hermes-agent/issues/3.
 
 ## Packages List
 
