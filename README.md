@@ -80,11 +80,7 @@ At current stage, feature sets may include:
   - [ ] `httpx-sse>=0.4.0,<0.5`
   - [ ] `msgpack>=1.0.7,<2`
   - [ ] `websockets>=12.0`
-- [ ] `edge-tts==7.2.7`
-  - [ ] `aiohttp>=3.8.0,<4.0.0`
-  - [ ] `certifi>=2023.11.17`
-  - [ ] `tabulate>=0.4.4,<1.0.0`
-  - [x] ~~`typing-extensions>=4.1.0,<5.0.0`~~
+- [x] `edge-tts==7.2.7`
 - [ ] `hindsight-client==0.6.1`
   - [ ] `aiohttp-retry>=2.8.3`
   - [ ] `aiohttp>=3.8.4`
