@@ -33,6 +33,16 @@ Requires:       chromium
 Requires:       python3dist(edge-tts) == 7.2.7-1
 Requires:       python3dist(ptyprocess) == 0.7.0
 Requires:       python3dist(simple-term-menu) == 1.6.6
+Requires:       python3dist(mcp) == 1.26.0
+Requires:       python3dist(aiohttp) == 3.13.5
+Requires:       python3dist(agent-client-protocol) == 0.9.0
+Requires:       python3dist(youtube-transcript-api) == 1.2.4
+Requires:       python3dist(uvicorn[standard]) == 0.40.0
+Requires:       python3dist(fastapi) == 0.136.3
+Requires:       python3dist(google-api-python-client) == 2.194.0
+Requires:       python3dist(google-auth-httplib2) == 0.3.1
+Requires:       python3dist(google-auth-oauthlib) == 1.2.4
+
 
 %description -n hermes-agent %_description
 
