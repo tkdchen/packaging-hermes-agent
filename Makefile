@@ -10,7 +10,17 @@ version ?=
 
 .PHONY: require/arg/name
 require/arg/name:
-	@if [[ -z "$(name)" ]]; then printf "Missing package name. Use argument name.\n" >&2; exit 1; fi
+	@if [[ -z "$(name)" ]]; then \
+		printf "Missing package name. Use argument name.\n" >&2; \
+		exit 1; \
+	fi
+
+.PHONY: require/arg/version
+require/arg/version:
+	@if [[ -z "$(version)" ]]; then \
+		printf "Missing package version. Use argument version.\n" >&2; \
+		exit 1; \
+	fi
 
 .PHONY: dirs/packages
 dirs/packages:
@@ -23,8 +33,7 @@ dirs/results:
 
 
 .PHONY: package/import
-package/import: require/arg/name dirs/packages
-	if [[ -z "$(version)" ]]; then printf "Missing package version. Use argument version.\n" >&2; exit 1; fi; \
+package/import: require/arg/name require/arg/version dirs/packages
 	mkdir ./$(PACKAGES_DIR)/$(name); \
 	cd ./$(PACKAGES_DIR)/$(name); \
 	pyp2spec --version $(version) --fedora-compliant $(name)
