@@ -31,6 +31,8 @@ Summary:        %{summary}
 
 Requires:       chromium
 Requires:       python3dist(edge-tts) == 7.2.7-1
+Requires:       python3dist(ptyprocess) == 0.7.0
+Requires:       python3dist(simple-term-menu) == 1.6.6
 
 %description -n hermes-agent %_description
 
