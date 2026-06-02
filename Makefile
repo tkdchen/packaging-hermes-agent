@@ -1,9 +1,10 @@
 
-REPO_URL = https://github.com/tkdchen/packaging-hermes-agent
-COPR_NAME = cqi/hermes-agent
+COPR_NAME ?= cqi/hermes-agent
+REPO_URL ?= https://github.com/tkdchen/packaging-hermes-agent
+ROOT_CFG ?= fedora-rawhide-x86_64
+
 PACKAGES_DIR = packages
 RESULTS_DIR = results
-ROOT_CFG = fedora-rawhide-x86_64
 
 name ?=
 version ?=
