@@ -2,6 +2,8 @@
 
 Packaging `hermes-agent==0.14.0` and its dependencies for Fedora rawhide (f45).
 
+Build status <img src="https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-hermes-agent/status_image/last_build.png" title="Build status of package hermes-agent" />
+
 Reference following HTML documents for detailed buildability analysis.
 
 - [Main buildability report](hermes-agent-buildability.html) — based on direct dependencies of hermes-agent.
