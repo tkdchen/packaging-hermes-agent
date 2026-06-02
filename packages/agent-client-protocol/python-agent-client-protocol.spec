@@ -1,4 +1,3 @@
-%global pypi_name agent-client-protocol
 Name:           python-agent-client-protocol
 Version:        0.9.0
 Release:        %autorelease

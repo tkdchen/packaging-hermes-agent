@@ -1,4 +1,3 @@
-%global pypi_name hermes-agent
 %global srcname hermes_agent
 Name:           python-hermes-agent
 Version:        0.14.0

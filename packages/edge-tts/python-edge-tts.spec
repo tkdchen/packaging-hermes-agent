@@ -1,4 +1,3 @@
-%global pypi_name edge-tts
 %global srcname edge_tts
 Name:           python-edge-tts
 Version:        7.2.7
@@ -43,7 +42,7 @@ Summary:        %{summary}
 
 
 %check
-# Upstream does not test code.
+# Upstream does not have test code.
 %pyproject_check_import
 
 

@@ -1,4 +1,3 @@
-%global pypi_name mcp
 Name:           python-mcp
 Version:        1.26.0
 Release:        %autorelease
@@ -30,7 +29,6 @@ Summary:        %{summary}
 
 
 %generate_buildrequires
-# Keep only those extras which you actually want to package or use during tests
 %pyproject_buildrequires -x cli,rich,ws
 
 

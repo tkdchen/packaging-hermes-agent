@@ -1,4 +1,3 @@
-%global pypi_name simple-term-menu
 Name:           python-simple-term-menu
 Version:        1.6.6
 Release:        %autorelease

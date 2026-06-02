@@ -1,4 +1,3 @@
-%global pypi_name ptyprocess
 Name:           python-ptyprocess
 Version:        0.7.0
 Release:        %autorelease

@@ -1,4 +1,3 @@
-%global pypi_name fire
 Name:           python-fire
 Version:        0.7.1
 Release:        %autorelease
@@ -54,5 +53,4 @@ Summary:        %{summary}
 
 
 %changelog
-* Wed May 27 2026 Chenxiong Qi <qcxhome@gmail.com>
-- Build fire==0.7.1
+%autochangelog
