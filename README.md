@@ -13,6 +13,15 @@ Reference following HTML documents for detailed buildability analysis.
 
 Builds are managed within Copr project [hermes-agent] in Fedora Copr build system.
 
+## Installation from Copr
+
+```bash
+podman run --rm -it registry.fedoraproject.org/fedora:rawhide
+dnf install -y dnf-utils
+dnf copr enable cqi/hermes-agent
+dnf install -y hermes-agent
+```
+
 ## Benefits
 
 - A trusted source for installing Hermes agent.
