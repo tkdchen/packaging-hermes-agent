@@ -24,6 +24,32 @@ dnf copr enable cqi/hermes-agent
 dnf install -y hermes-agent
 ```
 
+## Helper commands
+
+Import a PyPI package:
+
+```bash
+make package/import name=<name> version=<version>
+```
+
+Start a local build:
+
+```bash
+make local/build name=<name>
+```
+
+Add a package to the Copr project:
+
+```bash
+make copr/add-package/scm name=<name>
+```
+
+Configure target `copr/add-package/scm`:
+
+```bash
+make copr/add-package/scm name=<name> COPR_NAME=<copr project name> REPO_URL=<URL> ROOT_CFG=<config>
+```
+
 ## Benefits
 
 - A trusted source for installing Hermes agent.
