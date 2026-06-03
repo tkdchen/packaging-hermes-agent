@@ -62,6 +62,16 @@ make copr/add-package/scm name=<name> COPR_NAME=<copr project name> REPO_URL=<UR
 - Dependencies are pinned to exact versions with `==`.
 - Run hermes-agent tests under `%check` stage.
 
+## Supply Chain Risks
+
+- Package PyAudio: upstream source code repository disappears.
+
+  Project website: https://people.csail.mit.edu/hubert/pyaudio/. It mentions the
+  git repository git clone https://people.csail.mit.edu/hubert/git/pyaudio.git,
+  which is unavailable now.
+
+  Affected package: `elevenlabs`.
+
 ## Plan
 
 - Define feature sets so that not all packages are installed together at once.
