@@ -79,22 +79,13 @@ At current stage, feature sets may include:
 
 ## Packages List
 
-- [ ] `simple-term-menu==1.6.6`
+- [x] ~~`simple-term-menu==1.6.6`~~
 - [ ] `dingtalk-stream==0.24.3`
 - [ ] `alibabacloud-dingtalk==2.2.42`
 - [ ] `brotlicffi==1.2.0.1`
   - [ ] `cffi>=1.0.0`
-- [ ] `youtube-transcript-api==1.2.4`
-  - [ ] `defusedxml>=0.7.1,<0.8.0`
-  - [ ] `requests`
+- [x] `youtube-transcript-api==1.2.4`
 - [x] ~~`fire==0.7.1`~~ - [Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-fire/) in Fedora Copr.
-  - [ ] `termcolor<3.2.0`
-  - [ ] `setuptools<=80.9.0`
-  - [ ] `pip`
-  - [ ] `pylint<3.3.8`
-  - [ ] `pytest<=8.4.1`
-  - [ ] `hypothesis<6.136.0`
-  - [ ] `levenshtein<=0.27.1`
 - [ ] `exa-py==2.10.2`
   - [ ] `httpcore>=1.0.9`
   - [ ] `httpx>=0.28.1`
