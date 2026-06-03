@@ -6,9 +6,18 @@ Summary:        Google API Client Library for Python
 License:        Apache-2.0
 URL:            https://github.com/googleapis/google-api-python-client/
 Source:         %{pypi_source google_api_python_client}
-#
+
+# Remove discovery_cache/file_cache.py
+# oauth2client was a dependency but replaced with google-auth.
+# file_cache.py can't be imported. Error is raised during import.
 Patch:          remove-discovery_cache-file_cache.patch
-#
+
+# Remove discovery_cache/appengine_memcache.py
+# Quote from source code:
+# This is only an optional dependency because we only import this
+# module when google.appengine.api.memcache is available.
+# from google.appengine.api import memcache
+# Google appengine is not a dependency so far.
 Patch:          remove-discovery_cache-appengine_memcache.patch
 
 BuildArch:      noarch
