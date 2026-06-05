@@ -1,0 +1,12 @@
+diff -uNr parallel_web-0.4.2-origin/pyproject.toml parallel_web-0.4.2/pyproject.toml
+--- parallel_web-0.4.2-origin/pyproject.toml	2026-06-05 11:25:36.067753834 +0800
++++ parallel_web-0.4.2/pyproject.toml	2026-06-05 11:25:51.470699949 +0800
+@@ -92,7 +92,7 @@
+ "typecheck:mypy" = "mypy ."
+ 
+ [build-system]
+-requires = ["hatchling==1.26.3", "hatch-fancy-pypi-readme"]
++requires = ["hatchling>=1.26.3", "hatch-fancy-pypi-readme"]
+ build-backend = "hatchling.build"
+ 
+ [tool.hatch.build]
