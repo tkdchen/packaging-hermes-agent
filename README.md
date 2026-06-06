@@ -85,75 +85,102 @@ Feature sets could be determined by either dependency extras or referening Herme
 At current stage, feature sets may include:
 
 - `Default` https://github.com/tkdchen/packaging-hermes-agent/issues/1. Minimal set of packages to run the agent with basic functionalities. Package set maps to `dependencies` defined in `pyproject.toml`.
-- `all` https://github.com/tkdchen/packaging-hermes-agent/issues/3.
+  - `all` https://github.com/tkdchen/packaging-hermes-agent/issues/3.
+- Full. Meta subpackage to install base and the following all extra subpackages.
+- Provider
+  - anthropic `anthropic==0.87.0`
+  - bedrock ~~`boto3==1.42.89`~~ Existing build `python-boto3-1.43.20-1.fc45`
+  - azure_identity ~~`azure-identity==1.25.3`~~ Existing build `python-azure-identity-1.17.1-7.fc44`
+- Web search backends
+  - exa ~~`exa-py==2.10.2`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-exa-py/)
+  - firecrawl ~~`firecrawl-py==4.17.0`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-firecrawl-py/)
+  - parallel ~~`parallel-web==0.4.2`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-parallel-web/)
+- tts (Text-to-speech)
+  - mistral `mistralai==2.4.8`
+  - edge ~~`edge-tts==7.2.7`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-edge-tts/) - Included in the Default.
+  - elevenlabs `elevenlabs==1.59.0`
+    - Supply chain risk. PyAudio code repository disappears.
+- stt (Speech-to-text)
+  - mistral `mistralai==2.4.8`
+  - voice
+    - `faster-whisper==1.2.1`
+    - `sounddevice==0.5.5`
+    - `numpy==2.4.3`
+- image
+  - fal ~~`fal-client==0.13.1`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-fal-client/)
+- memory provider
+  - honcho `honcho-ai==2.0.1`
+  - hindsight `hindsight-client==0.6.1`
+- messaging
+  - telegram `python-telegram-bot[webhooks]==22.6`
+  - discord
+    - `discord.py[voice]==2.7.1`
+    - `brotlicffi==1.2.0.1`
+  - slack
+    - `slack-bolt==1.27.0`
+    - `slack-sdk==3.40.1`
+    - `aiohttp==3.13.4`
+  - matrix
+    - `mautrix[encryption]==0.21.0`
+    - `Markdown==3.10.2`
+    - `aiosqlite==0.22.1`
+    - `asyncpg==0.31.0`
+    - `aiohttp-socks==0.11.0`
+  - dingtalk
+    - `dingtalk-stream==0.24.3`
+    - `alibabacloud-dingtalk==2.2.42`
+    - ~~`qrcode==7.4.2`~~ Existing build `python-qrcode-8.0-10.fc44`
+  - feishu
+    - `lark-oapi==1.5.3`
+      - Problem: no tests and `lark_oapi/ws/pb/protobuf` is not importable. Have reported an upstream issue. Waiting for a while for feedback.
+    - ~~`qrcode==7.4.2`~~ Existing build `python-qrcode-8.0-10.fc44`
+- terminal-backends
+  - modal `modal==1.3.4`
+  - daytona `daytona==0.155.0`
+- skills
+  - google workspace
+    - ~~`google-api-python-client==2.194.0`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-google-api-python-client/)
+    - ~~`google-auth-oauthlib==1.3.1`~~ Existing build `python-google-auth-oauthlib-1.2.4-2.fc45`
+    - ~~`google-auth-httplib2==0.3.1`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-google-auth-httplib2/)
+  - youtube ~~`youtube-transcript-api==1.2.4`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-youtube-transcript-api/)
+- acp ~~`agent-client-protocol==0.9.0`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-agent-client-protocol/)
+- dashboard
+  - ~~`fastapi==0.133.1`~~ Existing build.
+  - ~~`uvicorn[standard]==0.41.0`~~ Existing build.
+  - ~~`starlette==1.0.1`~~ Existing build.
+
+
+Exclude `termux` and `termux-all`.
 
 ## Packages List
 
 - [x] ~~`simple-term-menu==1.6.6`~~
 - [ ] `dingtalk-stream==0.24.3`
+  - [ ] `websockets==11.0.2` Existing build `python-websockets-15.0.1-10.fc44`, major version diff.
+  - [ ] `requests==2.30.0` Exisitng build `python-requests-2.33.1-1.fc45`, minor version diff.
+  - [ ] `aiohttp==3.10.0` Existing build `python-aiohttp-3.13.5-3.fc45`, minor version diff.
 - [ ] `alibabacloud-dingtalk==2.2.42`
+  - [ ] `alibabacloud_tea_openapi>=0.3.16, <1.0.0`
+  - [ ] `alibabacloud_tea_util>=0.3.14, <1.0.0`
+  - [ ] `alibabacloud_openapi_util>=0.2.4, <1.0.0`
+  - [ ] `alibabacloud_endpoint_util>=0.0.4, <1.0.0`
+  - [ ] `alibabacloud_gateway_spi>=0.0.2, <1.0.0`
+  - [ ] `alibabacloud_gateway_dingtalk>=1.0.2, <2.0.0`
 - [ ] `brotlicffi==1.2.0.1`
-  - [ ] `cffi>=1.0.0`
 - [x] `youtube-transcript-api==1.2.4`
 - [x] ~~`fire==0.7.1`~~ - [Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-fire/) in Fedora Copr.
-- [ ] `exa-py==2.10.2`
-  - [ ] `httpcore>=1.0.9`
-  - [ ] `httpx>=0.28.1`
+- [x] `exa-py==2.10.2`
   - [x] ~~`openai>=1.48`~~ - Available in Fedora repos. [Pull request](https://src.fedoraproject.org/rpms/python-openai/pull-request/2) of building upstream version `2.24.0`.
-  - [ ] `pydantic>=2.10.6`
-  - [ ] `python-dotenv>=1.0.1`
-  - [ ] `requests>=2.32.3`
-  - [x] ~~`typing-extensions>=4.12.2`~~ - Available in Fedora repos.
-- [ ] `firecrawl-py==4.17.0`
-  - [ ] `requests`
-  - [ ] `httpx`
-  - [ ] `python-dotenv`
-  - [ ] `websockets`
-  - [ ] `nest-asyncio`
-  - [ ] `pydantic>=2.0`
-  - [ ] `aiohttp`
-- [ ] `fal-client==0.13.1`
-  - [ ] `aiofiles>=24.1.0,<26`
-  - [ ] `asyncstdlib>=3.12.5,<4`
-  - [ ] `httpx>=0.21.0,<1`
-  - [ ] `httpx-sse>=0.4.0,<0.5`
-  - [ ] `msgpack>=1.0.7,<2`
-  - [ ] `websockets>=12.0`
+- [x] ~~`firecrawl-py==4.17.0`~~
+- [x] ~~`fal-client==0.13.1`~~
 - [x] `edge-tts==7.2.7`
 - [ ] `hindsight-client==0.6.1`
-  - [ ] `aiohttp-retry>=2.8.3`
-  - [ ] `aiohttp>=3.8.4`
-  - [ ] `pydantic>=2`
-  - [ ] `python-dateutil>=2.8.2`
-  - [x] ~~`typing-extensions>=4.7.1`~~
-  - [ ] `urllib3>=2.1.0,<3.0.0`
-  - [ ] `requests>=2.33.0`
 - [ ] `slack-sdk==3.40.1`
-  - [ ] `aiodns>1.0`
-  - [ ] `aiohttp>=3.7.3,<4`
-  - [ ] `boto3<=2`
-  - [ ] `SQLAlchemy>=1.4,<3`
-  - [ ] `websockets>=9.1,<16`
-  - [ ] `websocket-client>=1,<2`
 - [ ] `slack-bolt==1.27.0`
   - [ ] `slack_sdk>=3.38.0,<4`
 - [ ] `python-telegram-bot==22.6`
-  - [ ] `httpcore>=1.0.9`
-  - [ ] `httpx>=0.27,<0.29`
-  - [ ] `aiolimiter>=1.1,<1.3`
-  - [ ] `cachetools>=7.0.0,<8.0.0`
-  - [ ] `cffi>=1.17.0rc1`
-  - [ ] `cryptography>=39.0.1`
-  - [ ] `tornado~=6.5`
   - [ ] `apscheduler>=3.10.4,<3.12.0`
 - [ ] `vercel==0.5.7`
-  - [ ] `httpx>=0.27.0`
-  - [ ] `pydantic>=2.7.0`
-  - [ ] `anyio>=4.0.0`
-  - [x] ~~`typing-extensions>=4.0.0`~~
-  - [ ] `python-dotenv`
-  - [ ] `websockets>=12.0`
-  - [ ] `cbor2>=5.8.0,<6`
   - [ ] `vercel-workers>=0.0.16`
 - [ ] `honcho-ai==2.0.1`
   - [ ] `httpx>=0.28.0,<1`
@@ -161,100 +188,29 @@ At current stage, feature sets may include:
   - [x] ~~`typing-extensions>=4.12.0`~~
   - [ ] `honcho-cli>=0.1.0`
 - [ ] `elevenlabs==1.59.0`
-  - [ ] `httpx>=0.21.2`
-  - [ ] `pydantic>=1.9.2`
-  - [ ] `pydantic-core>=2.18.2`
-  - [ ] `requests>=2.20`
-  - [ ] `typing_extensions>=4.0.0`
-  - [ ] `websockets>=11.0`
   - [ ] `pyaudio>=0.2.14`
 - [ ] `lark-oapi==1.5.3`
-  - [ ] `requests>=2.25`
-  - [ ] `requests_toolbelt>=0.9`
-  - [ ] `websockets>=11,<16`
-  - [ ] `httpx>=0.24,<1.0`
-  - [ ] `aiohttp>=3.8`
-  - [ ] `fastapi>=0.100`
-  - [ ] `uvicorn>=0.23`
-  - [ ] `Flask>=2`
-  - [ ] `pycryptodome>=3.9`
-- [ ] `parallel-web==0.4.2`
-  - [ ] `anyio>=3.5.0,<5`
-  - [ ] `distro>=1.7.0,<2`
-  - [ ] `httpx>=0.23.0,<1`
-  - [ ] `pydantic>=1.9.0,<3`
-  - [ ] `sniffio`
-  - [x] ~~`typing-extensions>=4.10,<5`~~
-  - [ ] `aiohttp`
-  - [ ] `httpx-aiohttp>=0.1.9`
+- [x] ~~`parallel-web==0.4.2`~~
 - [ ] `anthropic==0.86.0`
-  - [ ] `anyio>=3.5.0,<5`
-  - [ ] `distro>=1.7.0,<2`
-  - [ ] `docstring-parser>=0.15,<1`
-  - [ ] `httpx>=0.25.0,<1`
-  - [ ] `jiter>=0.4.0,<1`
-  - [ ] `pydantic>=1.9.0,<3`
-  - [ ] `sniffio`
-  - [x] ~~`typing-extensions>=4.14,<5`~~
-  - [ ] `aiohttp`
-  - [ ] `boto3>=1.28.57`
-  - [ ] `botocore>=1.31.57`
-  - [ ] `mcp>=1.0`
-  - [ ] `google-auth>=2,<3`
   - [ ] `httpx-aiohttp>=0.1.9`
   - [ ] `standardwebhooks>=1.0.1,<2`
 - [ ] `modal==1.3.4`
-  - [ ] `aiohttp`
-  - [ ] `cbor2`
-  - [ ] `certifi`
-  - [ ] `click~=8.1`
-  - [ ] `protobuf>=3.19,<7.0`
-  - [ ] `rich>=12.0.0`
-  - [ ] `watchfiles`
-  - [ ] `typing_extensions~=4.6`
-  - [ ] `tomli`
   - [ ] `grpclib>=0.4.7,<0.4.10`
   - [ ] `synchronicity~=0.12.1`
 - [ ] `discord.py==2.7.1`
-  - [ ] `aiohttp>=3.7.4,<4`
-  - [ ] `PyNaCl>=1.5.0,<1.6`
-  - [x] ~~`typing-extensions>=4.3,<5`~~
+  - [ ] `PyNaCl>=1.5.0,<1.6` Existing build `python-pynacl-1.6.2-1.fc45`
+  - [ ] `davey>=0.1.0` - Rust
   - [ ] `tzdata`
-  - [ ] `orjson>=3.5.4`
-  - [ ] `aiodns>=1.1`
-  - [ ] `zstandard>=0.23.0`
   - [ ] `audioop-lts`
-  - [ ] `davey>=0.1.0`
   - [ ] `imghdr-lts==1.0.0`
-- [ ] `mautrix==0.21.0`
-  - [ ] `aiohttp>=3,<4`
-  - [ ] `attrs>=18.1.0`
-  - [ ] `yarl>=1.5,<2`
-  - [ ] `python-magic>=0.4.15,<0.5`
-  - [ ] `aiosqlite`
-  - [ ] `asyncpg`
-  - [ ] `base58`
-  - [ ] `unpaddedbase64`
-  - [ ] `ruamel.yaml`
-  - [ ] `pycryptodome`
+- `mautrix[encryption]==0.21.0`
+  - [ ] `pycryptodome`. Patch it to use `pycryptodomex` instead.
   - [ ] `python-olm`
-- [ ] `agent-client-protocol==0.9.0`
-  - [ ] `pydantic>=2.7`
-  - [ ] `logfire>=0.14`
-  - [ ] `opentelemetry-sdk>=1.28.0`
+- [x] ~~`agent-client-protocol==0.9.0`~~
 - [ ] `daytona==0.155.0`
-  - [ ] `Deprecated>=1.2.18,<2.0.0`
-  - [ ] `aiofiles>=24.1.0,<24.2.0`
-  - [ ] `aiohttp>=3.9.0,<4.0.0`
-  - [ ] `httpx>=0.28.0,<0.29.0`
-  - [ ] `pydantic>=2.4.2,<3.0.0`
-  - [ ] `python-dotenv>=1.0.0,<2.0.0`
-  - [ ] `python-multipart>=0.0.15,<0.1.0`
-  - [ ] `urllib3>=2.1.0,<3.0.0`
-  - [ ] `wsproto>=1.2.0,<2.0.0`
-  - [x] ~~`typing-extensions>=4.0.0`~~
+  - [ ] `aiofiles>=24.1.0,<24.2.0` Exisitng build `python-aiofiles-25.1.0-3.fc44`
+  - [ ] `python-multipart>=0.0.15,<0.1.0` Exisitng build `python-multipart-1.3.1-2.fc45`
   - [ ] `toml>=0.10.0,<0.11.0`
-  - [ ] `opentelemetry-api>=1.27.0,<2.0.0`
   - [ ] `daytona-api-client==0.181.0`
   - [ ] `daytona-api-client-async==0.181.0`
   - [ ] `daytona-toolbox-api-client==0.181.0`
@@ -265,9 +221,7 @@ At current stage, feature sets may include:
   - [ ] `opentelemetry-exporter-otlp-proto-http>=1.27.0,<2.0.0`
   - [ ] `opentelemetry-instrumentation-aiohttp-client>=0.59b0`
 - [ ] `faster-whisper==1.2.1`
-  - [ ] `numpy`
   - [ ] `ctranslate2`
-  - [ ] `onnxruntime`
 - [x] ~~`pywinpty==2.0.15`~~. Windows-only, skip it.
 
 
