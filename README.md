@@ -103,9 +103,11 @@ At current stage, feature sets may include:
   - `all` https://github.com/tkdchen/packaging-hermes-agent/issues/3.
 - Full. Meta subpackage to install base and the following all extra subpackages.
 - Provider
-  - anthropic `anthropic==0.87.0`
+  - anthropic ~~`anthropic==0.87.0`~~
   - bedrock ~~`boto3==1.42.89`~~ Existing build `python-boto3-1.43.20-1.fc45`
-  - azure_identity ~~`azure-identity==1.25.3`~~ Existing build `python-azure-identity-1.17.1-7.fc44`
+  - azure_identity ~~`azure-identity==1.25.3`~~
+    - Existing build `python-azure-identity-1.17.1-7.fc44`
+    - [PR](https://src.fedoraproject.org/rpms/python-azure-identity/pull-request/8) for building version `1.25.3`
 - Web search backends
   - exa ~~`exa-py==2.10.2`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-exa-py/)
   - firecrawl ~~`firecrawl-py==4.17.0`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-firecrawl-py/)
@@ -206,9 +208,8 @@ Exclude `termux` and `termux-all`.
   - [ ] `pyaudio>=0.2.14`
 - [ ] `lark-oapi==1.5.3`
 - [x] ~~`parallel-web==0.4.2`~~
-- [ ] `anthropic==0.86.0` ?
-  - [x] `httpx-aiohttp>=0.1.9` [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-httpx-aiohttp/)
-  - [ ] `standardwebhooks>=1.0.1,<2`
+- [x] ~~`anthropic==0.87.0`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-anthropic/)
+  - [x] ~~`httpx-aiohttp>=0.1.9`~~ [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-httpx-aiohttp/)
 - [ ] `modal==1.3.4`
   - [ ] `grpclib>=0.4.7,<0.4.10`
   - [ ] `synchronicity~=0.12.1`
