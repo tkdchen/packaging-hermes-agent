@@ -139,10 +139,9 @@ At current stage, feature sets may include:
     - `aiohttp==3.13.4`
   - matrix
     - `mautrix[encryption]==0.21.0`
-    - `Markdown==3.10.2`
-    - `aiosqlite==0.22.1`
-    - `asyncpg==0.31.0`
     - `aiohttp-socks==0.11.0`
+      - Existing build `python-aiohttp-socks-0.10.1-6.fc44`
+      - Existing dist-git pull request [#8](https://src.fedoraproject.org/rpms/python-aiohttp-socks/pull-request/8)
   - dingtalk
     - `dingtalk-stream==0.24.3`
     - `alibabacloud-dingtalk==2.2.42`
