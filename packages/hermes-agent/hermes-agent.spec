@@ -30,7 +30,7 @@ Summary:        %{summary}
 
 Requires:       chromium
 Requires:       python3dist(aiohttp) == 3.13.5
-Requires:       python3dist(ptyprocess) == 0.7.0
+Requires:       python3dist(ptyprocess) == 0.7
 Requires:       python3dist(simple-term-menu) == 1.6.6
 # TTS provider. Install to avoid lazy-install when launching hermes for the
 # first time.
@@ -40,22 +40,22 @@ Requires:       python3dist(fal-client) == 0.13.1-1
 # mcp
 Requires:       python3dist(mcp) == 1.27.1
 # tool: acp
-Requires:       python3dist(agent-client-protocol) == 0.9.0
+Requires:       python3dist(agent-client-protocol) == 0.9
 # tool: hermes dashboard
 Requires:       python3dist(fastapi) == 0.136.3
-Requires:       python3dist(uvicorn[standard]) == 0.40.0
+Requires:       python3dist(uvicorn[standard]) == 0.40
 # Skills: Google workspace
-Requires:       python3dist(google-api-python-client) == 2.194.0
+Requires:       python3dist(google-api-python-client) == 2.194
 Requires:       python3dist(google-auth-httplib2) == 0.3.1
 Requires:       python3dist(google-auth-oauthlib) == 1.2.4
 # Skills: youtube
 Requires:       python3dist(youtube-transcript-api) == 1.2.4
 # Web search backends
 Requires:       python3dist(exa-py) == 2.10.2
-Requires:       python3dist(firecrawl-py) == 4.17.0
+Requires:       python3dist(firecrawl-py) == 4.17
 Requires:       python3dist(parallel-web) == 0.4.2
 # Inference providers
-Requires:       python3dist(anthropic) == 0.87.0
+Requires:       python3dist(anthropic) == 0.87
 Requires:       python3dist(azure-identity) == 1.25.3
 # AWS Bedrock
 Requires:       python3dist(boto3) == 1.43.21
