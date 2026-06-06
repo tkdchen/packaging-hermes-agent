@@ -8,6 +8,11 @@ RESULTS_DIR = results
 
 name ?=
 version ?=
+skip_build_srpm ?=
+
+pkg_dir = ./$(PACKAGES_DIR)/$(name)/
+spec = $(pkg_dir)/python-$(name).spec
+result_dir = ./$(RESULTS_DIR)/$(name)
 
 .PHONY: require/arg/name
 require/arg/name:
@@ -40,6 +45,11 @@ package/import: require/arg/name require/arg/version dirs/packages
 	pyp2spec --version $(version) --fedora-compliant $(name)
 
 
+.PHONY: package/fetch-source
+package/fetch-source: require/arg/name
+	make -f .copr/Makefile source local=true outdir=$(pkg_dir) spec=$(spec)
+
+
 .PHONY: copr/add-package/scm
 copr/add-package/scm: require/arg/name
 	copr-cli add-package-scm \
@@ -53,16 +63,15 @@ copr/add-package/scm: require/arg/name
 
 .PHONY: local/build
 local/build: require/arg/name dirs/results
-	pkg_dir="./$(PACKAGES_DIR)/$(name)/"; \
-	spec="$${pkg_dir}/python-$(name).spec"; \
-	result_dir="./$(RESULTS_DIR)/$(name)"; \
-	make -f .copr/Makefile srpm local=true outdir="$$pkg_dir" spec="$$spec"; \
-	version=$$(rpmspec --parse "$$spec" | grep -E "^Version: +" | sed -E "s/^Version: +//"); \
-	find "$${pkg_dir}" -name "python-$(name)-$${version}-*.fc??.src.rpm" >./srpm_files; \
+	if [[ -z "$(skip_build_srpm)" ]]; then \
+		make -f .copr/Makefile srpm local=true outdir="$(pkg_dir)" spec="$(spec)"; \
+	fi; \
+	version=$$(rpmspec --parse "$(spec)" | grep -E "^Version: +" | sed -E "s/^Version: +//"); \
+	find "$(pkg_dir)" -name "python-$(name)-$${version}-*.fc??.src.rpm" >./srpm_files; \
 	trap 'rm -f ./srpm_files' EXIT ERR; \
 	if [[ $$(wc -l ./srpm_files | cut -d' ' -f1) -eq 1 ]]; then \
-		mock --rebuild --root $(ROOT_CFG) --resultdir "$$result_dir" "$$(cat srpm_files)"; \
+		mock --rebuild --root $(ROOT_CFG) --resultdir "$(result_dir)" "$$(cat srpm_files)"; \
 	else \
-		printf "Cannot start mock build. Check SRPM under %s\n" "$$pkg_dir" >&2; \
+		printf "Cannot start mock build. Check SRPM under %s\n" "$(pkg_dir)" >&2; \
 		exit 1; \
 	fi; \

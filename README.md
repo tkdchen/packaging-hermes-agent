@@ -32,11 +32,26 @@ Import a PyPI package:
 make package/import name=<name> version=<version>
 ```
 
+Fetch upstream source:
+
+```bash
+make package/fetch-source name=<name>
+```
+
 Start a local build:
 
 ```bash
 make local/build name=<name>
 ```
+
+Start a local build with existing built SRPM:
+
+```bash
+make local/build name=<name> skip_build_srpm=true
+```
+
+This also means fetching upstream source does not happen.
+
 
 Add a package to the Copr project:
 
