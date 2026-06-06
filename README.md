@@ -136,7 +136,7 @@ At current stage, feature sets may include:
   - slack
     - `slack-bolt==1.27.0`
     - `slack-sdk==3.40.1`
-    - `aiohttp==3.13.4`
+    - ~~`aiohttp==3.13.4`~~ Existing build `python-aiohttp-3.13.5-3.fc45`
   - matrix
     - `mautrix[encryption]==0.21.0`
     - `aiohttp-socks==0.11.0`
@@ -199,9 +199,6 @@ Exclude `termux` and `termux-all`.
 - [ ] `vercel==0.5.7`
   - [ ] `vercel-workers>=0.0.16`
 - [ ] `honcho-ai==2.0.1`
-  - [ ] `httpx>=0.28.0,<1`
-  - [ ] `pydantic>=2.0.0,<3`
-  - [x] ~~`typing-extensions>=4.12.0`~~
   - [ ] `honcho-cli>=0.1.0`
 - [ ] `elevenlabs==1.59.0`
   - [ ] `pyaudio>=0.2.14`
