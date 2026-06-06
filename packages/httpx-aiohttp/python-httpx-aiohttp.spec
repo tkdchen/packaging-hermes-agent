@@ -12,7 +12,10 @@ BuildRequires:  python3-devel
 
 
 %global _description %{expand:
-This is package 'httpx-aiohttp' generated automatically by pyp2spec.}
+httpx-aiohttp - provides transports for httpx to work on top of aiohttp,
+handling all high-level features like authentication, retries, and cookies
+through httpx, while delegating low-level socket-level HTTP messaging to
+aiohttp.}
 
 %description %_description
 
