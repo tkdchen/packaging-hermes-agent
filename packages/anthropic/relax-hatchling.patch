@@ -1,0 +1,12 @@
+diff -uNr anthropic-0.87.0-origin/pyproject.toml anthropic-0.87.0/pyproject.toml
+--- anthropic-0.87.0-origin/pyproject.toml	2026-06-06 15:14:10.280418748 +0800
++++ anthropic-0.87.0/pyproject.toml	2026-06-06 15:14:23.893237308 +0800
+@@ -92,7 +92,7 @@
+ ]
+ 
+ [build-system]
+-requires = ["hatchling==1.26.3", "hatch-fancy-pypi-readme"]
++requires = ["hatchling>=1.26.3", "hatch-fancy-pypi-readme"]
+ build-backend = "hatchling.build"
+ 
+ [tool.hatch.build]
