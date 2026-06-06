@@ -191,8 +191,8 @@ Exclude `termux` and `termux-all`.
   - [ ] `pyaudio>=0.2.14`
 - [ ] `lark-oapi==1.5.3`
 - [x] ~~`parallel-web==0.4.2`~~
-- [ ] `anthropic==0.86.0`
-  - [ ] `httpx-aiohttp>=0.1.9`
+- [ ] `anthropic==0.86.0` ?
+  - [x] `httpx-aiohttp>=0.1.9` [Copr Build](https://copr.fedorainfracloud.org/coprs/cqi/hermes-agent/package/python-httpx-aiohttp/)
   - [ ] `standardwebhooks>=1.0.1,<2`
 - [ ] `modal==1.3.4`
   - [ ] `grpclib>=0.4.7,<0.4.10`
