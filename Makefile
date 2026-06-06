@@ -61,11 +61,17 @@ copr/add-package/scm: require/arg/name
 		$(COPR_NAME)
 
 
-.PHONY: local/build
-local/build: require/arg/name dirs/results
+.PHONY: local/srpm
+local/srpm: require/arg/name dirs/packages
 	if [[ -z "$(skip_build_srpm)" ]]; then \
 		make -f .copr/Makefile srpm local=true outdir="$(pkg_dir)" spec="$(spec)"; \
-	fi; \
+	fi
+
+.PHONY: local/build
+local/build: dirs/results local/srpm
+# 	if [[ -z "$(skip_build_srpm)" ]]; then \
+# 		make -f .copr/Makefile srpm local=true outdir="$(pkg_dir)" spec="$(spec)"; \
+# 	fi
 	version=$$(rpmspec --parse "$(spec)" | grep -E "^Version: +" | sed -E "s/^Version: +//"); \
 	find "$(pkg_dir)" -name "python-$(name)-$${version}-*.fc??.src.rpm" >./srpm_files; \
 	trap 'rm -f ./srpm_files' EXIT ERR; \
@@ -75,3 +81,12 @@ local/build: require/arg/name dirs/results
 		printf "Cannot start mock build. Check SRPM under %s\n" "$(pkg_dir)" >&2; \
 		exit 1; \
 	fi; \
+
+dependent_rpms ?=
+srpm ?=
+
+.PHONY: local/build
+local/build-custom:
+	mock -r $(ROOT_CFG) --dnf --init
+	mock -r $(ROOT_CFG) --install $(dependent_rpms)
+	mock -r $(ROOT_CFG) --no-clean --no-cleanup-after --resultdir ./$(RESULTS_DIR)/ --rebuild $(srpm)
