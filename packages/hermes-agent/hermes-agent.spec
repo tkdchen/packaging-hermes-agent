@@ -7,8 +7,8 @@ Summary:        The self-improving AI agent — creates skills from experience, 
 License:        MIT
 URL:            github.com/NousResearch/hermes-agent
 Source:         %{pypi_source %{srcname}}
-# Proxy of executable hermes CLI.
 Source:         hermes.sh
+# Proxy of executable hermes CLI.
 Patch:          relax-deps.patch
 # Fix: https://github.com/NousResearch/hermes-agent/pull/35346
 # It is marked as P3 (Low).
