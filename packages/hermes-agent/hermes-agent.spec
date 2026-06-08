@@ -79,6 +79,11 @@ Requires:       python3dist(boto3) == 1.43.21
 %install
 %pyproject_install
 
+mkdir -p %{buildroot}/%{_datadir}/hermes-agent
+cp -r skills/ %{buildroot}/%{_datadir}/hermes-agent/
+cp -r optional-skills/ %{buildroot}/%{_datadir}/hermes-agent/
+cp -r plugins/ %{buildroot}/%{_datadir}/hermes-agent/
+
 
 %check
 # Deselect tests tests/test_install_sh_*.py. They require scripts/install.sh
@@ -146,6 +151,8 @@ PYTHONPATH=. %pytest \
 %{python3_sitelib}/trajectory_compressor.py
 %{python3_sitelib}/utils.py
 
+# Include skills, optional-skills and plugins
+%{_datadir}/hermes-agent/
 
 %changelog
 %autochangelog
