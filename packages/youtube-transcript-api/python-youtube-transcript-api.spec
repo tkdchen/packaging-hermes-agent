@@ -6,6 +6,8 @@ Summary:        YouTube Transcript API
 License:        MIT
 URL:            https://github.com/jdepoix/youtube-transcript-api
 Source:         %{pypi_source youtube_transcript_api}
+# 2026-06-07: Fedora 45 Python 3.15 side tag has been merged
+Patch:          allow-building-with-python-3.15.patch
 
 BuildArch:      noarch
 BuildRequires:  python3-devel

@@ -1,0 +1,19 @@
+diff -uNr youtube_transcript_api-1.2.4-origin/pyproject.toml youtube_transcript_api-1.2.4/pyproject.toml
+--- youtube_transcript_api-1.2.4-origin/pyproject.toml	2026-06-08 11:30:36.969377262 +0800
++++ youtube_transcript_api-1.2.4/pyproject.toml	2026-06-08 11:31:07.620599805 +0800
+@@ -49,7 +49,7 @@
+ precommit.shell = "poe format && poe lint && poe coverage"
+ 
+ [tool.poetry.dependencies]
+-python = ">=3.8,<3.15"
++python = ">=3.8,<3.16"
+ requests = "*"
+ defusedxml = "^0.7.1"
+ 
+@@ -93,4 +93,4 @@
+     "@abstractclassmethod",
+     "@abstractstaticmethod"
+ ]
+-show_missing = true
+\ No newline at end of file
++show_missing = true
