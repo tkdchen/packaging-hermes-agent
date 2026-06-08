@@ -7,6 +7,8 @@ Summary:        The self-improving AI agent — creates skills from experience, 
 License:        MIT
 URL:            github.com/NousResearch/hermes-agent
 Source:         %{pypi_source %{srcname}}
+# Proxy of executable hermes CLI.
+Source:         hermes.sh
 Patch:          relax-deps.patch
 # Fix: https://github.com/NousResearch/hermes-agent/pull/35346
 # It is marked as P3 (Low).
@@ -79,6 +81,9 @@ Requires:       python3dist(boto3) == 1.43.21
 %install
 %pyproject_install
 
+mv %{buildroot}/%{_bindir}/hermes %{buildroot}/%{_bindir}/hermes-cli
+install %{_sourcedir}/hermes.sh %{buildroot}/%{_bindir}/hermes
+
 mkdir -p %{buildroot}/%{_datadir}/hermes-agent
 cp -r skills/ %{buildroot}/%{_datadir}/hermes-agent/
 cp -r optional-skills/ %{buildroot}/%{_datadir}/hermes-agent/
@@ -124,6 +129,7 @@ PYTHONPATH=. %pytest \
 %{python3_sitelib}/%{srcname}-%{version}.dist-info/
 
 %{_bindir}/hermes
+%{_bindir}/hermes-cli
 %{_bindir}/hermes-acp
 %{_bindir}/hermes-agent
 
