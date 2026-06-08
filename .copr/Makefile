@@ -10,7 +10,7 @@ source:
 	if [ -z "$(local)" ]; then exit 0; fi; \
 	source_url=$$(rpmspec --parse $(spec) | grep -E "^Source: +" | sed -E 's/^Source: +//') && \
 	printf "⬇️ Download source from %s\n" "$$source_url" >&2; \
-	cd $(sources_dir) && curl -LO "$${source_url}"; \
+	cd $(sources_dir) && curl -C - -LO "$${source_url}"; \
 	printf "Downloaded file: %s%s\n" "$(sources_dir)" "$$(basename $$source_url)"
 
 .PHONY: srpm
