@@ -6,6 +6,8 @@ Summary:        Python SDK for ACP clients and agents.
 License:        Apache-2.0
 URL:            https://agentclientprotocol.github.io/python-sdk/
 Source:         https://github.com/agentclientprotocol/python-sdk/archive/refs/tags/%{version}.tar.gz
+# 2026-06-07: Fedora 45 Python 3.15 side tag has been merged
+Patch:          allow-building-with-python-3.15.patch
 
 BuildArch:      noarch
 BuildRequires:  python3-devel

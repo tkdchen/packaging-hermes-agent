@@ -1,0 +1,12 @@
+diff -uNr python-sdk-0.9.0-origin/pyproject.toml python-sdk-0.9.0/pyproject.toml
+--- python-sdk-0.9.0-origin/pyproject.toml	2026-06-08 11:25:07.106846850 +0800
++++ python-sdk-0.9.0/pyproject.toml	2026-06-08 11:25:17.587597424 +0800
+@@ -8,7 +8,7 @@
+ ]
+ readme = "README.md"
+ keywords = ['python']
+-requires-python = ">=3.10,<3.15"
++requires-python = ">=3.10,<3.16"
+ classifiers = [
+     "Intended Audience :: Developers",
+     "Programming Language :: Python",
