@@ -10,7 +10,7 @@ source:
 	if [ -z "$(local)" ]; then exit 0; fi; \
 	rpmspec --parse $(spec) | grep -E "^Source: +" | while read -r prefix source_file; \
 	do \
-		printf "Prepare source file %s\n" "$$source_file"
+		printf "Prepare source file %s\n" "$$source_file"; \
 		if [[ $${source_file} =~ ^https://.+ ]]; then \
 			printf "⬇️ Download source from %s\n" "$$source_file" >&2; \
 			curl -C - -L -o $(sources_dir)$$(basename "$$source_file") "$${source_file}"; \
