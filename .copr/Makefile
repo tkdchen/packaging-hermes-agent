@@ -8,10 +8,18 @@ endif
 .PHONY: source
 source:
 	if [ -z "$(local)" ]; then exit 0; fi; \
-	source_url=$$(rpmspec --parse $(spec) | grep -E "^Source: +" | sed -E 's/^Source: +//') && \
-	printf "⬇️ Download source from %s\n" "$$source_url" >&2; \
-	cd $(sources_dir) && curl -C - -LO "$${source_url}"; \
-	printf "Downloaded file: %s%s\n" "$(sources_dir)" "$$(basename $$source_url)"
+	rpmspec --parse $(spec) | grep -E "^Source: +" | while read -r prefix source_file; \
+	do \
+		if [[ $${source_file} =~ ^https://.+ ]]; then \
+			printf "⬇️ Download source from %s\n" "$$source_file" >&2; \
+			curl -C - -L -o $(sources_dir)$$(basename "$$source_file") "$${source_file}"; \
+			printf "Downloaded file: %s%s\n" "$(sources_dir)" "$$(basename $$source_file)"; \
+		else \
+			local_source_file="$$(dirname "$(spec)")/$${source_file}"; \
+			cp "$$local_source_file" $(sources_dir); \
+			printf "Copied local source file %s to %s\n" "$$local_source_file" "$(sources_dir)"; \
+		fi; \
+	done
 
 .PHONY: srpm
 srpm: source
