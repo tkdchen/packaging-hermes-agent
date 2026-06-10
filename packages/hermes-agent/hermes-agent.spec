@@ -32,7 +32,7 @@ Summary:        %{summary}
 
 Requires:       chromium
 # ffmpeg for TTS voice messages
-Requires:       ffmpeg
+Requires:       ffmpeg-free
 # required for browser tools and TUI
 Requires:       nodejs
 # ripgrep for faster file search
