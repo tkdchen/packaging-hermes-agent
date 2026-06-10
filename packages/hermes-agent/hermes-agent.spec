@@ -31,6 +31,13 @@ The agent that grows with you}
 Summary:        %{summary}
 
 Requires:       chromium
+# ffmpeg for TTS voice messages
+Requires:       ffmpeg
+# required for browser tools and TUI
+Requires:       nodejs
+# ripgrep for faster file search
+Requires:       ripgrep
+
 Requires:       python3dist(aiohttp) == 3.13.5
 Requires:       python3dist(ptyprocess) == 0.7
 Requires:       python3dist(simple-term-menu) == 1.6.6
