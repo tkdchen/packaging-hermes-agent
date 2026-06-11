@@ -14,8 +14,8 @@ Patch:          relax-deps.patch
 # It is marked as P3 (Low).
 Patch:          tests-conftest-0.14.0.patch
 
-Patch:          0001-feat-Add-Fedora-managed-system.patch
-Patch:          0002-feat-Uninstall-respects-managed-system.patch
+# Patch:          0001-feat-Add-Fedora-managed-system.patch
+# Patch:          0002-feat-Uninstall-respects-managed-system.patch
 
 BuildArch:      noarch
 BuildRequires:  python3-devel
