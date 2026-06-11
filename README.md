@@ -95,7 +95,9 @@ make copr/add-package/scm name=<name> COPR_NAME=<copr project name> REPO_URL=<UR
 
 ## Idea of Feature Sets
 
-Feature sets could be determined by either dependency extras or referening Hermes [Features Overview].
+Feature sets could be determined by either dependency extras or referencing Hermes [Features Overview].
+
+- Native hermes-agent desktop
 
 At current stage, feature sets may include:
 
