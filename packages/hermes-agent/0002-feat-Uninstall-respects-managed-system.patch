@@ -1,0 +1,52 @@
+From f75b1c04c5de67106c32f1dabb9347faca63bfc6 Mon Sep 17 00:00:00 2001
+From: Chenxiong Qi <qcxhome@gmail.com>
+Date: Thu, 11 Jun 2026 15:13:38 +0800
+Subject: [PATCH 2/2] feat: Uninstall respects managed system
+
+This is a global change for uninstall subcommand and format error is
+updated for fedora specifically.
+
+Signed-off-by: Chenxiong Qi <qcxhome@gmail.com>
+---
+ hermes_cli/config.py    | 3 ++-
+ hermes_cli/uninstall.py | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/hermes_cli/config.py b/hermes_cli/config.py
+index 0e5cf52a2..c6c290dc4 100644
+--- a/hermes_cli/config.py
++++ b/hermes_cli/config.py
+@@ -263,11 +263,12 @@ def format_managed_message(action: str = "modify this Hermes installation") -> s
+ 
+     if managed_system == "Fedora":
+         env_hint = raw or "fedora"
++        dnf_cmd = "remove" if action.startswith("uninstall ") else "update"
+         return (
+             f"Cannot {action}: this Hermes installation is managed by Fedora "
+             f"(HERMES_MANAGED={env_hint}).\n"
+             "Use:\n"
+-            "  dnf update hermes-agent"
++            f"  dnf {dnf_cmd} hermes-agent"
+         )
+ 
+     return (
+diff --git a/hermes_cli/uninstall.py b/hermes_cli/uninstall.py
+index 2d781e754..f2533258f 100644
+--- a/hermes_cli/uninstall.py
++++ b/hermes_cli/uninstall.py
+@@ -441,6 +441,12 @@ def run_uninstall(args):
+     - Full uninstall: removes code + ~/.hermes/ (configs, data, logs)
+     - Keep data: removes code but keeps ~/.hermes/ for future reinstall
+     """
++    from hermes_cli.config import is_managed, managed_error
++
++    if is_managed():
++        managed_error("uninstall Hermes Agent")
++        return
++
+     project_root = get_project_root()
+     hermes_home = get_hermes_home()
+ 
+-- 
+2.54.0
+
