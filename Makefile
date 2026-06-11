@@ -1,4 +1,6 @@
 
+PWD = $(shell pwd)
+
 COPR_NAME ?= cqi/hermes-agent
 REPO_URL ?= https://github.com/tkdchen/packaging-hermes-agent
 ROOT_CFG ?= fedora-rawhide-x86_64
@@ -91,3 +93,15 @@ local/build-custom:
 	mock -r $(ROOT_CFG) --dnf --init
 	mock -r $(ROOT_CFG) --install which findutils vim-enhanced dnf-utils $(dependent_rpms)
 	mock -r $(ROOT_CFG) --no-clean --no-cleanup-after --resultdir ./$(RESULTS_DIR)/ --rebuild $(srpm)
+
+
+IMAGE ?= registry.fedoraproject.org/fedora:rawhide
+C_NAME ?= test-hermes-agent-install
+
+
+.PHONY: tests/install
+tests/install:
+	podman stop test-hermes-agent-install || :
+	podman rm test-hermes-agent-install || :
+	podman run -d --name $(C_NAME) -v $(PWD):/code:z -it $(IMAGE) sleep infinity
+	podman exec -it $(C_NAME) bash /code/tests/test-install.sh $(COPR_NAME)
