@@ -1,0 +1,50 @@
+From 19aa74c17899e7437607994cf6da0b853caaf311 Mon Sep 17 00:00:00 2001
+From: Chenxiong Qi <qcxhome@gmail.com>
+Date: Thu, 11 Jun 2026 13:33:14 +0800
+Subject: [PATCH] feat: Add Fedora managed system
+
+Signed-off-by: Chenxiong Qi <qcxhome@gmail.com>
+---
+ hermes_cli/config.py | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/hermes_cli/config.py b/hermes_cli/config.py
+index 574f2397d..0e5cf52a2 100644
+--- a/hermes_cli/config.py
++++ b/hermes_cli/config.py
+@@ -161,6 +161,7 @@ _MANAGED_SYSTEM_NAMES = {
+     "homebrew": "Homebrew",
+     "nix": "NixOS",
+     "nixos": "NixOS",
++    "fedora": "Fedora",
+ }
+ 
+ 
+@@ -196,6 +197,8 @@ def get_managed_update_command() -> Optional[str]:
+         return "brew upgrade hermes-agent"
+     if managed_system == "NixOS":
+         return "sudo nixos-rebuild switch"
++    if managed_system == "Fedora":
++        return "sudo dnf update hermes-agent"
+     return None
+ 
+ 
+@@ -258,6 +261,15 @@ def format_managed_message(action: str = "modify this Hermes installation") -> s
+             "  brew upgrade hermes-agent"
+         )
+ 
++    if managed_system == "Fedora":
++        env_hint = raw or "fedora"
++        return (
++            f"Cannot {action}: this Hermes installation is managed by Fedora "
++            f"(HERMES_MANAGED={env_hint}).\n"
++            "Use:\n"
++            "  dnf update hermes-agent"
++        )
++
+     return (
+         f"Cannot {action}: this Hermes installation is managed by {managed_system}.\n"
+         "Use your package manager to upgrade or reinstall Hermes."
+-- 
+2.54.0
+
