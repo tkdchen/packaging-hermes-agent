@@ -33,6 +33,33 @@ The agent that grows with you}
 %package -n     hermes-agent
 Summary:        %{summary}
 
+# Background of listing these dependencies explicitly:
+# As of building 0.14.0, hermes-agent project does not support namespaced modules.
+# Source code is not organized in pattern src/hermes/...
+# So, in order to not pollute site-packages/, a workaround here is to install into /usr/share/hermes-agent,
+# which results in .dist-info/ is moved outside site-packages/, then automatic dependency generator does not work.
+#
+# When building a version that namespaces modules, remove these and back to rely on the
+# automatic dependency generator again.
+
+# Base dependencies
+Requires:       python3dist(openai) == 2.24
+Requires:       python3dist(python-dotenv) == 1.2.2
+Requires:       python3dist(fire) == 0.7.1
+Requires:       python3dist(httpx[socks]) == 0.28.1
+Requires:       python3dist(rich) == 15
+Requires:       python3dist(tenacity) == 9.1.4
+Requires:       python3dist(pyyaml) == 6.0.3
+Requires:       python3dist(ruamel-yaml) == 0.19.1
+Requires:       python3dist(requests) == 2.33.1
+Requires:       python3dist(jinja2) == 3.1.6
+Requires:       python3dist(pydantic) == 2.13.4
+Requires:       python3dist(prompt-toolkit) == 3.0.52
+Requires:       python3dist(croniter) == 6.2.2
+Requires:       python3dist(pyjwt[crypto]) == 2.12.1
+Requires:       python3dist(psutil) == 7.2.2
+
+
 Requires:       chromium
 # ffmpeg for TTS voice messages
 Requires:       ffmpeg-free
