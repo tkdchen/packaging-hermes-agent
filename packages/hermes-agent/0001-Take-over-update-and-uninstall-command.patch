@@ -1,0 +1,44 @@
+From e85048f287da8ce8daf0b61861215190b47196c7 Mon Sep 17 00:00:00 2001
+From: Chenxiong Qi <qcxhome@gmail.com>
+Date: Fri, 12 Jun 2026 19:49:54 +0800
+Subject: [PATCH] Take over update and uninstall command
+
+Signed-off-by: Chenxiong Qi <qcxhome@gmail.com>
+---
+ hermes_cli/main.py | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/hermes_cli/main.py b/hermes_cli/main.py
+index 41c4a23f9..e48803c31 100644
+--- a/hermes_cli/main.py
++++ b/hermes_cli/main.py
+@@ -5639,6 +5639,13 @@ def cmd_version(args):
+ def cmd_uninstall(args):
+     """Uninstall Hermes Agent."""
+     _require_tty("uninstall")
++
++    if os.environ.get("HERMES_MANAGED_BY") == "fedora":
++        print("Cannot uninstall Hermes Agent: this Hermes installation is managed by Fedora.")
++        print("Use:")
++        print("  sudo dnf remove hermes-agent")
++        return
++
+     from hermes_cli.uninstall import run_uninstall
+ 
+     run_uninstall(args)
+@@ -7690,6 +7697,12 @@ def cmd_update(args):
+     runs the update, then restores stdio on the way out (even on
+     ``sys.exit`` or unhandled exceptions).
+     """
++    if os.environ.get("HERMES_MANAGED_BY") == "fedora":
++        print("Cannot update Hermes Agent: this Hermes installation is managed by Fedora.")
++        print("Use:")
++        print("  sudo dnf update hermes-agent")
++        return
++
+     from hermes_cli.config import is_managed, managed_error
+ 
+     if is_managed():
+-- 
+2.54.0
+

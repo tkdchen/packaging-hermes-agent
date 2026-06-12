@@ -14,8 +14,10 @@ Patch:          relax-deps.patch
 # It is marked as P3 (Low).
 Patch:          tests-conftest-0.14.0.patch
 
-# Patch:          0001-feat-Add-Fedora-managed-system.patch
-# Patch:          0002-feat-Uninstall-respects-managed-system.patch
+# This is a workaround taking over hermes update and uninstall command.
+# It borrows the managed system concept of hermes, which looks applies to NixOS and perhaps Homebrew.
+# This workaround will be deleted when upstream has a better managed system support (maybe need redesign).
+Patch:          0001-Take-over-update-and-uninstall-command.patch
 
 BuildArch:      noarch
 BuildRequires:  python3-devel

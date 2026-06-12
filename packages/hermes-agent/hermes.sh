@@ -10,4 +10,7 @@ export HERMES_OPTIONAL_SKILLS
 
 export PYTHONPATH=$INST_DIR
 
+# Prevent relative commands from run and prompt right dnf command.
+export HERMES_MANAGED_BY=fedora
+
 /usr/bin/hermes-cli "$@"
