@@ -8,6 +8,4 @@ declare -r DATA_DIR=/usr/share/hermes-agent
 export HERMES_BUNDLED_SKILLS
 export HERMES_OPTIONAL_SKILLS
 
-export HERMES_MANAGED=fedora
-
-hermes-cli "$@"
+/usr/bin/hermes-cli "$@"
