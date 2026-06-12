@@ -91,13 +91,54 @@ Requires:       python3dist(boto3) == 1.43.21
 %install
 %pyproject_install
 
-mv %{buildroot}/%{_bindir}/hermes %{buildroot}/%{_bindir}/hermes-cli
-install %{_sourcedir}/hermes.sh %{buildroot}/%{_bindir}/hermes
+mv %{buildroot}/%{_bindir}/hermes %{buildroot}%{_bindir}/hermes-cli
+install -p %{_sourcedir}/hermes.sh %{buildroot}%{_bindir}/hermes
 
-mkdir -p %{buildroot}/%{_datadir}/hermes-agent
-cp -r skills/ %{buildroot}/%{_datadir}/hermes-agent/
-cp -r optional-skills/ %{buildroot}/%{_datadir}/hermes-agent/
-cp -r plugins/ %{buildroot}/%{_datadir}/hermes-agent/
+HERMES_INST_DIR=%{buildroot}%{_datadir}/hermes-agent/
+
+mkdir -p ${HERMES_INST_DIR}
+cp -r skills/ ${HERMES_INST_DIR}
+cp -r optional-skills/ ${HERMES_INST_DIR}
+#cp -r plugins/ ${HERMES_INST_DIR}
+
+mkdir ${HERMES_INST_DIR}/__pycache__/
+
+hermes_files_and_dirs=(
+    %{srcname}-%{version}.dist-info/
+
+    acp_adapter/
+    agent/
+    cron/
+    gateway/
+    hermes_cli/
+    plugins/
+    providers/
+    tools/
+    tui_gateway/
+
+    batch_runner.py
+    cli.py
+    hermes_bootstrap.py
+    hermes_constants.py
+    hermes_logging.py
+    hermes_state.py
+    hermes_time.py
+    model_tools.py
+    run_agent.py
+    toolset_distributions.py
+    toolsets.py
+    trajectory_compressor.py
+    utils.py
+)
+
+for file_or_dir_name in ${hermes_files_and_dirs[@]}
+do
+    mv %{buildroot}/%{python3_sitelib}/${file_or_dir_name} ${HERMES_INST_DIR}
+    if [[ .${file_or_dir_name##*.} == .py ]]; then
+        mv %{buildroot}/%{python3_sitelib}/__pycache__/${file_or_dir_name%.*}.cpython-3??.pyc \
+           ${HERMES_INST_DIR}/__pycache__/
+    fi
+done
 
 
 %check
@@ -135,40 +176,40 @@ PYTHONPATH=. %pytest \
 %doc README.md
 %license LICENSE
 
-%{python3_sitelib}/__pycache__/
-%{python3_sitelib}/%{srcname}-%{version}.dist-info/
+# %%{python3_sitelib}/__pycache__/
+# %%{python3_sitelib}/%%{srcname}-%%{version}.dist-info/
 
 %{_bindir}/hermes
 %{_bindir}/hermes-cli
 %{_bindir}/hermes-acp
 %{_bindir}/hermes-agent
 
-%{python3_sitelib}/acp_adapter/
-%{python3_sitelib}/agent/
-%{python3_sitelib}/cron/
-%{python3_sitelib}/gateway/
-%{python3_sitelib}/hermes_cli/
-%{python3_sitelib}/plugins/
-%{python3_sitelib}/providers/
-%{python3_sitelib}/tools/
-%{python3_sitelib}/tui_gateway/
-
-%{python3_sitelib}/batch_runner.py
-%{python3_sitelib}/cli.py
-%{python3_sitelib}/hermes_bootstrap.py
-%{python3_sitelib}/hermes_constants.py
-%{python3_sitelib}/hermes_logging.py
-%{python3_sitelib}/hermes_state.py
-%{python3_sitelib}/hermes_time.py
-%{python3_sitelib}/model_tools.py
-%{python3_sitelib}/run_agent.py
-%{python3_sitelib}/toolset_distributions.py
-%{python3_sitelib}/toolsets.py
-%{python3_sitelib}/trajectory_compressor.py
-%{python3_sitelib}/utils.py
-
-# Include skills, optional-skills and plugins
+# Include the installation directory
 %{_datadir}/hermes-agent/
+
+# %%{python3_sitelib}/acp_adapter/
+# %%{python3_sitelib}/agent/
+# %%{python3_sitelib}/cron/
+# %%{python3_sitelib}/gateway/
+# %%{python3_sitelib}/hermes_cli/
+# %%{python3_sitelib}/plugins/
+# %%{python3_sitelib}/providers/
+# %%{python3_sitelib}/tools/
+# %%{python3_sitelib}/tui_gateway/
+
+# %%{python3_sitelib}/batch_runner.py
+# %%{python3_sitelib}/cli.py
+# %%{python3_sitelib}/hermes_bootstrap.py
+# %%{python3_sitelib}/hermes_constants.py
+# %%{python3_sitelib}/hermes_logging.py
+# %%{python3_sitelib}/hermes_state.py
+# %%{python3_sitelib}/hermes_time.py
+# %%{python3_sitelib}/model_tools.py
+# %%{python3_sitelib}/run_agent.py
+# %%{python3_sitelib}/toolset_distributions.py
+# %%{python3_sitelib}/toolsets.py
+# %%{python3_sitelib}/trajectory_compressor.py
+# %%{python3_sitelib}/utils.py
 
 %changelog
 %autochangelog
