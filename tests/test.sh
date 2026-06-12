@@ -5,10 +5,11 @@
 set -ex
 
 COPR_NAME=${1:?Missing Copr name}
+HERMES_AGENT_RPM=${2:-hermes-agent}
 
-dnf install -y dnf-utils which
+dnf --setopt=fastestmirror=1 install -y dnf-utils which
 dnf copr enable -y "${COPR_NAME}"
-dnf install -y hermes-agent
+dnf --setopt=fastestmirror=1 install -y ${HERMES_AGENT_RPM}
 
 which hermes
 which hermes-acp
@@ -18,18 +19,18 @@ chromium-browser --version
 ffmpeg -version
 node --version
 
-declare -r DATA_DIR=/usr/share/hermes-agent
+declare -r INST_DIR=/usr/share/hermes-agent
 
-if [[ ! -e "${DATA_DIR}/skills" ]]; then
-    printf "Bundled skills are not installed under %s\n" "$DATA_DIR" >&2
+if [[ ! -e "${INST_DIR}/skills" ]]; then
+    printf "Bundled skills are not installed under %s\n" "$INST_DIR" >&2
     exit 1
 fi
-if [[ ! -e "${DATA_DIR}/optional-skills" ]]; then
-    printf "Optional skills are not installed under %s\n" "$DATA_DIR" >&2
+if [[ ! -e "${INST_DIR}/optional-skills" ]]; then
+    printf "Optional skills are not installed under %s\n" "$INST_DIR" >&2
     exit 1
 fi
 
-python3 -c "
+PYTHONPATH="$INST_DIR" python3 -c "
 import plugins
 print(plugins)
 "

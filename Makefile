@@ -97,11 +97,11 @@ local/build-custom:
 
 IMAGE ?= registry.fedoraproject.org/fedora:rawhide
 C_NAME ?= test-hermes-agent-install
-
+LOCAL_RPM ?=
 
 .PHONY: tests/install
 tests/install:
 	podman stop test-hermes-agent-install || :
 	podman rm test-hermes-agent-install || :
-	podman run -d --name $(C_NAME) -v $(PWD):/code:z -it $(IMAGE) sleep infinity
-	podman exec -it $(C_NAME) bash /code/tests/test-install.sh $(COPR_NAME)
+	podman run -d --name $(C_NAME) --mount type=bind,source=$(PWD),destination=/code -it $(IMAGE) sleep infinity
+	podman exec -it $(C_NAME) bash /code/tests/test.sh $(COPR_NAME) $(LOCAL_RPM)
