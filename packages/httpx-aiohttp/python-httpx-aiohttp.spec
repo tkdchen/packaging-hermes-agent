@@ -48,6 +48,7 @@ Summary:        %{summary}
 
 
 %files -n python3-httpx-aiohttp -f %{pyproject_files}
+%doc README.md CONTRIBUTING.md CHANGELOG.md
 
 
 %changelog
