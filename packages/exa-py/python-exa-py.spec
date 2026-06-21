@@ -14,10 +14,6 @@ Patch:          add-license.patch
 BuildArch:      noarch
 BuildRequires:  python3-devel
 
-BuildRequires:  python3-pytest
-# BuildRequires:  python3-pytest-asyncio
-BuildRequires:  python3-pytest-mock
-
 
 %global _description %{expand:
 The official Python SDK for Exa, the web search API for AI.}
