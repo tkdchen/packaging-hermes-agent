@@ -50,6 +50,7 @@ Summary:        %{summary}
 
 
 %files -n python3-exa-py -f %{pyproject_files}
+%doc README.md
 
 
 %changelog
