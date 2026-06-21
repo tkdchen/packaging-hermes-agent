@@ -50,6 +50,7 @@ Summary:        %{summary}
 
 %files -n python3-google-auth-httplib2 -f %{pyproject_files}
 %doc README.rst
+%license LICENSE
 
 
 %changelog
