@@ -43,7 +43,9 @@ Summary:        %{summary}
 
 
 %files -n python3-simple-term-menu -f %{pyproject_files}
-%{_bindir}/simple-term-menu 
+%doc README.md
+%license LICENSE
+%{_bindir}/simple-term-menu
 
 
 %changelog
