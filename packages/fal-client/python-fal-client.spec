@@ -54,7 +54,7 @@ Summary:        %{summary}
 
 %files -n python3-fal-client -f %{pyproject_files}
 %doc README.md
-# %license LICENSE
+%license LICENSE
 
 
 %changelog
