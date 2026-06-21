@@ -58,6 +58,7 @@ Summary:        %{summary}
 
 %files -n python3-google-api-python-client -f %{pyproject_files}
 %doc README.md
+%license LICENSE
 
 
 %changelog
