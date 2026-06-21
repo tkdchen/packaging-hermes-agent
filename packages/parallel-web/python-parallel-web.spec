@@ -52,6 +52,7 @@ Summary:        %{summary}
 
 %files -n python3-parallel-web -f %{pyproject_files}
 %doc api.md CHANGELOG.md CONTRIBUTING.md SECURITY.md README.md
+%license LICENSE
 
 
 %changelog
