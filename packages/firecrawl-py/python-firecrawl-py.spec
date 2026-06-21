@@ -49,6 +49,8 @@ rm -rf %{buildroot}%{python3_sitelib}/tests/
 
 
 %files -n python3-firecrawl-py -f %{pyproject_files}
+%doc README.md
+%license LICENSE
 
 
 %changelog
