@@ -83,7 +83,7 @@ Requires:       python3dist(mcp) == 1.27.1
 # tool: acp
 Requires:       python3dist(agent-client-protocol) == 0.9
 # tool: hermes dashboard
-Requires:       python3dist(fastapi) == 0.136.3
+Requires:       python3dist(fastapi) >= 0.136.3
 Requires:       python3dist(uvicorn[standard]) == 0.40
 # Skills: Google workspace
 Requires:       python3dist(google-api-python-client) == 2.194
@@ -99,7 +99,7 @@ Requires:       python3dist(parallel-web) == 0.4.2
 Requires:       python3dist(anthropic) == 0.87
 Requires:       python3dist(azure-identity) == 1.25.3
 # AWS Bedrock
-Requires:       python3dist(boto3) == 1.43.21
+Requires:       python3dist(boto3) >= 1.43.21
 
 
 %description -n hermes-agent %_description
