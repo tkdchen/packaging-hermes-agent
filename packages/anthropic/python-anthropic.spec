@@ -47,6 +47,7 @@ Summary:        %{summary}
 
 %files -n python3-anthropic -f %{pyproject_files}
 %doc README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md api.md helpers.md tools.md examples/
+%license LICENSE
 
 
 %changelog
