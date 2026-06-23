@@ -1,7 +1,7 @@
 Name:           python-exa-py
 Version:        2.10.2
 Release:        %autorelease
-Summary:        Python SDK for Exa API.
+Summary:        Python SDK for Exa API
 
 License:        MIT
 URL:            https://github.com/exa-labs/exa-py
