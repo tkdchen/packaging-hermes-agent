@@ -36,13 +36,13 @@ The agent that grows with you}
 Summary:        %{summary}
 
 # Background of listing these dependencies explicitly:
-# As of building 0.14.0, hermes-agent project does not support namespaced modules.
-# Source code is not organized in pattern src/hermes/...
-# So, in order to not pollute site-packages/, a workaround here is to install into /usr/share/hermes-agent,
+# When building 0.14.0, hermes-agent project does not support namespaced modules.
+# Source code is not organized in the src-layout, e.g. src/hermes_agent/...
+# In order to not pollute site-packages/, a workaround is to install into /usr/share/hermes-agent,
 # which results in .dist-info/ is moved outside site-packages/, then automatic dependency generator does not work.
 #
-# When building a version that namespaces modules, remove these and back to rely on the
-# automatic dependency generator again.
+# When hermes-agent upstream starts to support namespaced modules, remove these and back to rely on the
+# automatic dependency generator.
 
 # Base dependencies
 Requires:       python3dist(openai) == 2.24
